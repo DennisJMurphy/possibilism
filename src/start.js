@@ -10,16 +10,22 @@ let elem;
 
 let isLoggedIn; //= null;
 if (location.pathname == "/welcome") {
-    isLoggedIn = true;
-} else {
     isLoggedIn = false;
+} else {
+    isLoggedIn = true;
 }
-
-if (!isLoggedIn) {
+//console.log("isloggedin, start.js", isLoggedIn);
+if (isLoggedIn == false) {
     elem = <Welcome />;
 } else {
     elem = (
-        <img width="120px" className="logo" src="/Serious_Possibilists.jpg" />
+        <div>
+            <img
+                width="120px"
+                className="logo"
+                src="/Serious_Possibilists.jpg"
+            />
+        </div>
     );
 }
 

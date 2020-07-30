@@ -12,3 +12,8 @@ module.exports.registerUser = (first, last, email, password) => {
     let params = [first, last, email, password];
     return db.query(q, params);
 };
+module.exports.getPass = (email) => {
+    //console.log("email in the getPass", email);
+    let q = "SELECT id, password FROM users WHERE email=$1";
+    return db.query(q, [email]);
+};
