@@ -53,31 +53,37 @@ app.get("/welcome", function (req, res) {
     }
 });
 app.post("/login", (req, res) => {
-    console.log("credentials", req.body.rows);
+    //console.log("credentials", req.body.email, req.body.password);
     var passEntered = req.body.password;
-    db.getPass(req.body.email).then((result) => {
-        console.log("result", result.fields);
-        var tempId = result.rows[0].id;
-        var passStored = result.rows[0].password;
-        compare(passEntered, passStored)
-            .then((result) => {
-                if (result == true) {
-                    req.session.userId = tempId;
-                    console.log("password correct!");
-                    res.json({ success: true });
-                    res.sendFile(__dirname + "/index.html");
-                } else {
-                    console.log("password incorrect!");
+    db.getPass(req.body.email)
+        .then((result) => {
+            console.log("result", result.fields);
+            var tempId = result.rows[0].id;
+            var passStored = result.rows[0].password;
+            compare(passEntered, passStored)
+                .then((result) => {
+                    if (result == true) {
+                        req.session.userId = tempId;
+                        console.log("password correct!");
+                        res.json({ success: true });
+                        res.sendFile(__dirname + "/index.html");
+                    } else {
+                        console.log("password incorrect!");
+                        res.json({ success: false });
+                        res.sendFile(__dirname + "/index.html");
+                    }
+                })
+                .catch((err) => {
+                    console.log("err in post /login", err);
                     res.json({ success: false });
                     res.sendFile(__dirname + "/index.html");
-                }
-            })
-            .catch((err) => {
-                console.log("err in post /login", err);
-                res.json({ success: false });
-                res.sendFile(__dirname + "/index.html");
-            });
-    });
+                });
+        })
+        .catch((err) => {
+            console.log("err in post /login DB", err);
+            res.json({ success: false });
+            res.sendFile(__dirname + "/index.html");
+        });
 });
 
 app.post("/register", (req, res) => {
