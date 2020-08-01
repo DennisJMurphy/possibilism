@@ -44,6 +44,7 @@ export default class Registration extends React.Component {
     render() {
         return (
             <div>
+                <h2>Join us! </h2>
                 {this.state.error && (
                     <div className="error">
                         {" "}
@@ -72,7 +73,8 @@ export default class Registration extends React.Component {
                     type="password"
                 />
                 <button onClick={(e) => this.submit()}>Register</button>
-                <Link to="./login"> Registered? log in!</Link>
+                <div></div>
+                <Link to="./login"> Already Registered? log in!</Link>
             </div>
         );
     }

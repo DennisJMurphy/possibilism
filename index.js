@@ -15,12 +15,6 @@ const { hash, compare } = require("./bc");
 app.use(express.static("public"));
 app.use(express.json());
 //app.use(express.urlencoded({extended: false,}));
-const csurf = require("csurf");
-app.use(csurf());
-app.use(function (req, res, next) {
-    res.cookie("mytoken", req.csrfToken());
-    next();
-});
 app.use(compression());
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -32,7 +26,16 @@ if (process.env.NODE_ENV != "production") {
 } else {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
-
+const cryptoRandomString = require("crypto-random-string");
+const secretCode = cryptoRandomString({
+    length: 6,
+});
+// const csurf = require("csurf");
+// app.use(csurf());
+// app.use(function (req, res, next) {
+//     res.cookie("mytoken", req.csrfToken());
+//     next();
+// });
 ////// end of initial setup and middleware/////
 
 app.get("/", function (req, res) {
@@ -50,6 +53,38 @@ app.get("/welcome", function (req, res) {
         res.redirect("/");
     } else {
         res.sendFile(__dirname + "/index.html");
+    }
+});
+app.post("/resetpassword", (req, res) => {
+    var email = req.body.email;
+    var step = req.body.step;
+    console.log("step:", step);
+    if (step == 1) {
+        db.getId(email)
+            .then((result) => {
+                if (result.rowCount == 0) {
+                    res.json({ success: false });
+                } else {
+                    var code = secretCode;
+                    db.setCode(email, code)
+                        .then(() => {
+                            res.json({
+                                success: true,
+                                email: email,
+                            });
+                        })
+                        .catch((err) => {
+                            console.log("err in post setCode", err);
+                            res.json({ success: false });
+                        });
+                }
+            })
+            .catch((err) => {
+                console.log("err in post getId", err);
+                res.json({ success: false });
+            });
+    } else if (step == 2) {
+        console.log("Step 2 muthafucka!");
     }
 });
 app.post("/login", (req, res) => {

@@ -11,3 +11,10 @@ CREATE TABLE users(
     profile_pic VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE password_reset_codes(
+    id SERIAL PRIMARY KEY,
+    email VARCHAR,
+    code VARCHAR(6),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

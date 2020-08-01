@@ -44,7 +44,6 @@ export default class Login extends React.Component {
             <div>
                 {this.state.error && (
                     <div className="error">
-                        {" "}
                         Something went wrong, try again.
                     </div>
                 )}
@@ -60,7 +59,12 @@ export default class Login extends React.Component {
                     type="password"
                 />
                 <button onClick={(e) => this.submit()}>Submit</button>
+                <div></div>
                 <Link to="/"> Made a mistake? Back to Registration.</Link>
+                <div></div>
+                <Link to="/resetpassword">
+                    Click here to reset your password.
+                </Link>
             </div>
         );
     }
