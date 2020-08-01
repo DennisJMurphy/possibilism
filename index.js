@@ -36,16 +36,16 @@ if (process.env.NODE_ENV != "production") {
 ////// end of initial setup and middleware/////
 
 app.get("/", function (req, res) {
-    //     console.log("is it true?", req.session.userId);
-    //     if (!req.session.userId) {
-    //         res.redirect("/welcome");
-    //     } else {
-    res.sendFile(__dirname + "/index.html");
-    //     }
+    //console.log("Cookie if any at '/': ", req.session.userId);
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
 });
 
 app.get("/welcome", function (req, res) {
-    console.log("cookie present?", req.session.userId);
+    //console.log("Welcome Route: cookie if any at/welcome", req.session.userId);
     if (req.session.userId) {
         res.redirect("/");
     } else {
@@ -57,32 +57,29 @@ app.post("/login", (req, res) => {
     var passEntered = req.body.password;
     db.getPass(req.body.email)
         .then((result) => {
-            console.log("result", result.fields);
+            //console.log("result", result);
             var tempId = result.rows[0].id;
             var passStored = result.rows[0].password;
+            //console.log("stored pass hash", passStored);
             compare(passEntered, passStored)
                 .then((result) => {
                     if (result == true) {
                         req.session.userId = tempId;
-                        console.log("password correct!");
+                        //console.log("password correct!");
                         res.json({ success: true });
-                        res.sendFile(__dirname + "/index.html");
                     } else {
-                        console.log("password incorrect!");
+                        //console.log("password incorrect!");
                         res.json({ success: false });
-                        res.sendFile(__dirname + "/index.html");
                     }
                 })
                 .catch((err) => {
                     console.log("err in post /login", err);
                     res.json({ success: false });
-                    res.sendFile(__dirname + "/index.html");
                 });
         })
         .catch((err) => {
             console.log("err in post /login DB", err);
             res.json({ success: false });
-            res.sendFile(__dirname + "/index.html");
         });
 });
 
@@ -100,19 +97,16 @@ app.post("/register", (req, res) => {
                 .then((result) => {
                     req.session.userId = result.rows[0].id;
                     res.json({ success: true });
-                    res.sendFile(__dirname + "/index.html");
                 })
                 .catch((err) => {
                     res.json({ success: false });
                     console.log("1err in post /add", err);
-                    res.sendFile(__dirname + "/index.html");
                     return;
                 });
         })
         .catch((err) => {
             res.json({ success: false });
             console.log("2err in post /add", err);
-            res.sendFile(__dirname + "/index.html");
             return;
         });
 });
