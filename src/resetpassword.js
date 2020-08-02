@@ -20,17 +20,16 @@ export default class ResetPassword extends React.Component {
             .post("/resetpassword", {
                 step: this.state.step,
                 email: this.state.email,
-                //code: this.state.code,
-                //password: this.state.password,
+                code: this.state.code,
+                password: this.state.password,
             })
             .then(({ data }) => {
-                console.log("data", data.success, data);
+                //console.log("reset password data", data.success, data.step);
                 if (data.success) {
                     this.setState({
                         error: false,
-                        step: 2,
+                        step: data.step,
                     });
-                    location.replace("/"); // replaces the url with the new url, making going back difficult
                 } else {
                     this.setState({
                         error: true,
@@ -64,16 +63,47 @@ export default class ResetPassword extends React.Component {
                     />
                     <button onClick={(e) => this.submit()}>Submit</button>
                     <div></div>
-                    <Link to="/">
-                        {" "}
-                        Or click here to go back to Registration.
-                    </Link>
+                    <p>Or click </p>
+                    <Link to="/">here</Link>
+                    <p> to go back to Registration.</p>
                 </div>
             );
         } else if (step == 2) {
-            return <div></div>;
+            return (
+                <div>
+                    {this.state.error && (
+                        <div className="error">
+                            Something went wrong, try again.
+                        </div>
+                    )}
+                    <p>
+                        Great! You should have received an email with a code in
+                        it.
+                    </p>
+                    <p>Please input the code and a new password.</p>
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="code"
+                        placeholder="code"
+                    />
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="password"
+                        placeholder="New Password"
+                        type="password"
+                    />
+                    <button onClick={(e) => this.submit()}>Submit</button>
+                </div>
+            );
         } else if (step == 3) {
-            return <div></div>;
+            return (
+                <div>
+                    <p>Great! It worked!</p>
+                    <p>Please </p>
+                    <Link to="./login">log in</Link>
+                    <p>with your email and new password.</p>
+                </div>
+            );
         }
         ///////or
         // <div>

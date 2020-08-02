@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const db = require("./db"); // adding .js is optional
+const ses = require("./ses");
 const cookieSession = require("cookie-session");
 app.use(
     cookieSession({
@@ -58,20 +59,32 @@ app.get("/welcome", function (req, res) {
 app.post("/resetpassword", (req, res) => {
     var email = req.body.email;
     var step = req.body.step;
-    console.log("step:", step);
+    var input = req.body.code;
+    var password = req.body.password;
+    //console.log("step:", step);
     if (step == 1) {
+        //console.log("email", email);
         db.getId(email)
             .then((result) => {
+                //console.log("results", result.rows[0]);
                 if (result.rowCount == 0) {
                     res.json({ success: false });
                 } else {
                     var code = secretCode;
                     db.setCode(email, code)
-                        .then(() => {
-                            res.json({
-                                success: true,
-                                email: email,
-                            });
+                        .then((result) => {
+                            ses.sendEmail(email, code, "Password Reset")
+                                .then((result) => {
+                                    res.json({
+                                        success: true,
+                                        email: email,
+                                        step: 2,
+                                    });
+                                })
+                                .catch((err) => {
+                                    console.log("err in post sendEmail", err);
+                                    res.json({ success: false });
+                                });
                         })
                         .catch((err) => {
                             console.log("err in post setCode", err);
@@ -84,7 +97,41 @@ app.post("/resetpassword", (req, res) => {
                 res.json({ success: false });
             });
     } else if (step == 2) {
-        console.log("Step 2 muthafucka!");
+        console.log("the things", email, input, password);
+        db.getCode()
+            .then((codes) => {
+                // console.log(
+                //     "the input and the stored code",
+                //     input,
+                //     codes.rows[0].code
+                // );
+                if (codes.rowcount == 0) {
+                    res.json({ success: false });
+                } else if (input == codes.rows[0].code) {
+                    //console.log("THE CODES MATCH");
+                    hash(password)
+                        .then((result) => {
+                            db.updatePass(email, result)
+                                .then((success) => {
+                                    res.json({ success: true, step: 3 });
+                                })
+                                .catch((err) => {
+                                    console.log("err in post updatePass", err);
+                                    res.json({ success: false });
+                                });
+                        })
+                        .catch((err) => {
+                            console.log("err in post hash", err);
+                            res.json({ success: false });
+                        });
+                }
+            })
+            .catch((err) => {
+                console.log("err in post getCode", err);
+                res.json({ success: false });
+            });
+    } else {
+        console.log("This else should not ever be in the console.");
     }
 });
 app.post("/login", (req, res) => {

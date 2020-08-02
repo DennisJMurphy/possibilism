@@ -11,30 +11,31 @@ if (process.env.NODE_ENV == "production") {
 const ses = new aws.SES({
     accessKeyId: secrets.AWS_KEY,
     secretAccessKey: secrets.AWS_SECRET,
-    region: "eu-west-1",
+    region: "eu-central-1",
 });
 exports.sendEmail = (to, text, subj) => {
-    return ses.sendEmail({
-        Source: 'dennis_j_murphy@mac.com',
-        Destination: {
-            ToAddresses: [to]
-        },
-        Message: {
-            Body: {
-                Text: {
-                    Data: text
-                }
+    console.log("to,text,subject", to, text, subj);
+    return ses
+        .sendEmail({
+            Source: "dennis_j_murphy@mac.com",
+            Destination: {
+                ToAddresses: [to],
             },
-            Subject: {
-                Data: subj
-            }
-        }
-    }).promise()
-//         .then(
-//              () => console.log('it worked!')
-//          ).catch(
-//              err => console.log(err);
-//      };
+            Message: {
+                Body: {
+                    Text: {
+                        Data: text,
+                    },
+                },
+                Subject: {
+                    Data: subj,
+                },
+            },
+        })
+        .promise()
+        .then(() => console.log("the email appears to have been sent"))
+        .catch((err) => console.log("I don't want to see this error", err));
+};
 // };
 // exports.sendEmail = (to, text, subj) => {
 //     return ses.sendEmail({
@@ -56,4 +57,4 @@ exports.sendEmail = (to, text, subj) => {
 //         () => console.log('it worked!')
 //     ).catch(
 //         err => console.log(err);
-// };
+//

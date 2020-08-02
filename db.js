@@ -20,5 +20,20 @@ module.exports.getPass = (email) => {
 module.exports.getId = (email) => {
     //console.log("email in the getPass", email);
     let q = "SELECT id FROM users WHERE email=$1";
-    return db.query(q, [email]);
+    let params = [email];
+    return db.query(q, params);
+};
+module.exports.setCode = (email, code) => {
+    //console.log("email in the getPass", email);
+    let q = "INSERT into password_reset_codes (email,code) VALUES ($1,$2)";
+    return db.query(q, [email, code]);
+};
+module.exports.getCode = () => {
+    let q =
+        "SELECT * FROM password_reset_codes WHERE CURRENT_TIMESTAMP -created_at < INTERVAL '2 minutes'";
+    return db.query(q);
+};
+module.exports.updatePass = (email, password) => {
+    let q = "UPDATE users SET password = $2 WHERE email = $1";
+    return db.query(q, [email, password]);
 };
