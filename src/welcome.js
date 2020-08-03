@@ -18,7 +18,6 @@ const Welcome = () => (
                         path="/resetpassword"
                         component={ResetPassword}
                     />
-                    {/* <Route exact path="/resetpassword" component={Reset} /> */}
                 </div>
             </div>
         </div>
@@ -26,16 +25,3 @@ const Welcome = () => (
 );
 
 export default Welcome;
-
-// function Welcome() {
-//     return (
-//         <div>
-//             <h1>We are not just silly optimists, we are rather...</h1>
-//             <img src="/Serious_Possibilists.jpg" />
-//             <h2>Join us!</h2>
-//             <div>
-//                 <Registration />
-//             </div>
-//         </div>
-//     );
-// }

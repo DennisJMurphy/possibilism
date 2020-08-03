@@ -3,7 +3,7 @@ export default function ProfilePic(props) {
     console.log("props in profilepic", props);
     return (
         <React.Fragment>
-            <div>I am the profile pic /presentational {props.first}</div>
+            <img src="/noPic.png" />
         </React.Fragment>
     );
 }

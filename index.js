@@ -72,9 +72,9 @@ app.post("/resetpassword", (req, res) => {
                 } else {
                     var code = secretCode;
                     db.setCode(email, code)
-                        .then((result) => {
+                        .then(() => {
                             ses.sendEmail(email, code, "Password Reset")
-                                .then((result) => {
+                                .then(() => {
                                     res.json({
                                         success: true,
                                         email: email,
@@ -189,6 +189,20 @@ app.post("/register", (req, res) => {
         .catch((err) => {
             res.json({ success: false });
             console.log("2err in post /add", err);
+            return;
+        });
+});
+app.get("/user", (req, res) => {
+    var userId = req.session.userId;
+    db.userData(userId)
+        .then((data) => {
+            //console.log("/userdata", data.rows[0]);
+            let { id, first, last, email, bio, profile_pic } = data.rows[0];
+            res.json({ id, first, last, email, bio, profile_pic });
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in get/user", err);
             return;
         });
 });

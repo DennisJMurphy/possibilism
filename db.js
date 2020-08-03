@@ -30,10 +30,14 @@ module.exports.setCode = (email, code) => {
 };
 module.exports.getCode = () => {
     let q =
-        "SELECT * FROM password_reset_codes WHERE CURRENT_TIMESTAMP -created_at < INTERVAL '2 minutes'";
+        "SELECT * FROM password_reset_codes WHERE CURRENT_TIMESTAMP -created_at < INTERVAL '5 minutes'";
     return db.query(q);
 };
 module.exports.updatePass = (email, password) => {
     let q = "UPDATE users SET password = $2 WHERE email = $1";
     return db.query(q, [email, password]);
+};
+module.exports.userData = (userId) => {
+    let q = "SELECT * FROM users WHERE id = $1";
+    return db.query(q, [userId]);
 };

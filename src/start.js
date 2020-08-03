@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Welcome from "./welcome";
 //import Registration from "./register";
-//import App from "./app"; // no curly brackets if it's a default
+import App from "./app"; // no curly brackets if it's a default
 
 let elem;
 
@@ -16,16 +16,7 @@ if (location.pathname == "/welcome") {
 if (isLoggedIn == false) {
     elem = <Welcome />;
 } else {
-    elem = (
-        <div>
-            {/* <h1 onClick={this.toggleModal()}>is there t</h1> */}
-            <img
-                width="120px"
-                className="logo"
-                src="/Serious_Possibilists.jpg"
-            />
-        </div>
-    );
+    elem = <App />;
 }
 
 ReactDOM.render(elem, document.querySelector("main"));
