@@ -41,3 +41,7 @@ module.exports.userData = (userId) => {
     let q = "SELECT * FROM users WHERE id = $1";
     return db.query(q, [userId]);
 };
+module.exports.updateImage = (userId, url) => {
+    let q = "UPDATE users SET profile_pic = $2 where id = $1";
+    return db.query(q, [userId, url]);
+};

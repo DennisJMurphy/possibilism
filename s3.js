@@ -22,7 +22,7 @@ exports.upload = function (req, res, next) {
     const { filename, mimetype, size, path } = req.file;
 
     s3.putObject({
-        Bucket: "socialnetwork", // gotta make a new bucket
+        Bucket: "socialnetwork23", // made a new bucket
         ACL: "public-read",
         //key is the name for bucket files, multer supplies this via filename
         Key: filename,
@@ -33,6 +33,7 @@ exports.upload = function (req, res, next) {
         .promise()
         .then(() => {
             next();
+            console.log("the pic seems to have uploaded");
             fs.unlink(path, () => {});
             // fs deletes the uploaded file
         })

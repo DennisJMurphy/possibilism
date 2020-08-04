@@ -1,12 +1,20 @@
 import React from "react";
 export default function ProfilePic(props) {
-    console.log("props in profilepic", props);
+    //console.log("props in profilepic", props);
+    let { first, last, image } = props;
+    image = image || "/Riffi_icon.jpg";
+    //console.log("imgUrl: ", image);
+
     return (
         <React.Fragment>
-            <img src="/noPic.png" />
+            <img
+                onClick={props.toggleModal}
+                src={image}
+                alt={first}
+                height="70px"
+            />
         </React.Fragment>
     );
 }
-
-// this page is not yet working, because things
 // Pete called this page something else - presentational, but it's called profile pic in the class notes anyway...
+// "presentational" components are 'dumb', "container" components are 'smart'

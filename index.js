@@ -31,6 +31,28 @@ const cryptoRandomString = require("crypto-random-string");
 const secretCode = cryptoRandomString({
     length: 6,
 });
+//// file upload business top //////
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
+//const { diskStorage } = require("multer");
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097157,
+    },
+});
+//// file upload business bottom //////
 // const csurf = require("csurf");
 // app.use(csurf());
 // app.use(function (req, res, next) {
@@ -205,6 +227,29 @@ app.get("/user", (req, res) => {
             console.log("err in get/user", err);
             return;
         });
+});
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    //req.file gets uploaded
+    // req. body is the rest of the input fields
+    if (req.file) {
+        var url =
+            "https://s3.amazonaws.com/socialnetwork23/" + req.file.filename;
+        console.log(req.file.filename);
+        console.log("check db inputs", req.session.id, url);
+        // need to add a db insert here for all info
+        db.updateImage(req.session.id, url).then((newDbData) => {
+            console.log("this is an URL right?", newDbData.rows[0]);
+            //res.json(newDbData.rows[0]);
+            res.json({
+                response: newDbData.rows[0],
+                success: true,
+            });
+        });
+    } else {
+        res.json({
+            success: false,
+        });
+    }
 });
 
 // get * must be the last route

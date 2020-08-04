@@ -1,16 +1,18 @@
 import React from "react";
-//import ProfilePic from "./profilepic";
+import ProfilePic from "./profilepic";
 import Header from "./header";
-//import Uploader from "./uploader";
-//import Profile from "./profile";
+import Uploader from "./uploader";
+import Profile from "./profile";
+import OtherProfile from "./otherProfile";
 import axios from "axios";
+import { BrowserRouter, Route } from "react-router-dom";
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             //   uploaderIsVisible: false,
         };
-        //  this.toggleModal = this.toggleModal.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
     // a david idea...async and await.. try at some point
     // async componentDidMount() {
@@ -19,36 +21,51 @@ export default class App extends React.Component {
     // }///////
 
     componentDidMount() {
-        console.log("app has mounted!!!!");
+        //console.log("app has mounted!!!!");
         axios
             .get("/user")
             .then(({ data }) => {
-                console.log("data from app", data);
-                this.setState({ data });
+                //console.log("data from app", data);
+                this.setState(data);
             })
             .catch(() => console.log("error"));
 
-        //     // need to get  some info via axios
-        //     // new route on the server
-        //     // /user could be good
         //     // then add the data back to state
         //     // call setState({}) and give it the object..
     }
     toggleModal() {
         this.setState({
-            // uploaderIsVisible: true,
+            uploaderIsVisible: true,
         });
     }
     // instead of <div>....<React.Fragment>?
     render() {
+        //console.log("this state in app", this.state);
         return (
-            <div>
-                <Header />
-                {/* <Profile />
-                <ProfilePic first={this.state.first} last={this.state.last} />
-                {this.state.uploaderIsVisible && <Uploader />}
-                <h1 onClick={this.toggleModal()}>is there t</h1> */}
-            </div>
+            <BrowserRouter>
+                <div>
+                    <Header />
+                    <div>
+                        <Route
+                            exact
+                            path="/"
+                            render={() => (
+                                <Profile
+                                    id={this.state.id}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    image={this.state.profile_pic}
+                                    toggleModal={this.toggleModal}
+                                    bio={this.state.bio}
+                                    setBio={this.setBio}
+                                />
+                            )}
+                        />
+                        <Route path="/user/:id" component={OtherProfile} />
+                    </div>
+                    {this.state.uploaderIsVisible && <Uploader />}
+                </div>
+            </BrowserRouter>
         );
     }
 }
