@@ -10,7 +10,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //   uploaderIsVisible: false,
+            uploaderIsVisible: false,
         };
         this.toggleModal = this.toggleModal.bind(this);
     }
@@ -36,6 +36,7 @@ export default class App extends React.Component {
     toggleModal() {
         this.setState({
             uploaderIsVisible: true,
+            profile_pic: "",
         });
     }
     // instead of <div>....<React.Fragment>?

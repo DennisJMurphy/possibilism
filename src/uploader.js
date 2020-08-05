@@ -6,16 +6,18 @@ class Uploader extends React.Component {
         this.state = {};
     }
     handleChange(e) {
-        //this[e.target.name] = e.target.value
         this.setState({
-            [e.target.name]: e.target.value,
+            profile_pic: e.target.files[0],
         });
     }
+
     submit() {
+        //console.log("Profilepic?", this.state.profile_pic);
+        let formData = new FormData();
+        formData.append("profile_pic", this.state.profile_pic);
+        //console.log("formdata", formData);
         axios
-            .post("/upload", {
-                profile_pic: this.state.profile_pic,
-            })
+            .post("/upload", formData, {})
             .then(({ data }) => {
                 //console.log("data", data.success, data);
                 if (data.success) {
@@ -41,10 +43,10 @@ class Uploader extends React.Component {
                 <input
                     onChange={(e) => this.handleChange(e)}
                     name="profile_pic"
-                    placeholder="file"
+                    accept="image/*"
                     type="file"
                 />
-                <button onClick={(e) => this.submit()}>submit</button>
+                <button onClick={(e) => this.submit(e)}>submit</button>
             </div>
         );
     }

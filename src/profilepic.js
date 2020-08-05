@@ -10,7 +10,7 @@ export default function ProfilePic(props) {
             <img
                 onClick={props.toggleModal}
                 src={image}
-                alt={first}
+                alt={(first, last)}
                 height="70px"
             />
         </React.Fragment>

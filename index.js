@@ -228,20 +228,20 @@ app.get("/user", (req, res) => {
             return;
         });
 });
-app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+app.post("/upload", uploader.single("profile_pic"), s3.upload, (req, res) => {
+    var userId = req.session.userId;
     //req.file gets uploaded
+    //console.log("req.file", req.file.filename);
     // req. body is the rest of the input fields
     if (req.file) {
         var url =
             "https://s3.amazonaws.com/socialnetwork23/" + req.file.filename;
-        console.log(req.file.filename);
-        console.log("check db inputs", req.session.id, url);
+        console.log("check db inputs, id and url", userId, url);
         // need to add a db insert here for all info
-        db.updateImage(req.session.id, url).then((newDbData) => {
-            console.log("this is an URL right?", newDbData.rows[0]);
-            //res.json(newDbData.rows[0]);
+        db.updateImage(userId, url).then((newDbData) => {
+            console.log("newdbdata", newDbData.rows[0].userId);
             res.json({
-                response: newDbData.rows[0],
+                response: url,
                 success: true,
             });
         });
