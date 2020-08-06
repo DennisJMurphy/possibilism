@@ -2,16 +2,18 @@ import React from "react";
 import ProfilePic from "./profilepic";
 import BioEditor from "./bio";
 export default function Profile(props) {
-    //console.log("props", props);
+    console.log("props in profile", props);
     return (
         <div className="profile">
-            <h1>I am profile</h1>
+            <h1>
+                {props.first} {props.last}
+            </h1>
             <ProfilePic
                 toggleModal={props.toggleModal}
                 newPic={props.newPic}
                 image={props.image}
             />
-            <BioEditor />
+            <BioEditor bio={props.bio} />
         </div>
     );
 }

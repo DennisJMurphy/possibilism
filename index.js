@@ -119,7 +119,7 @@ app.post("/resetpassword", (req, res) => {
                 res.json({ success: false });
             });
     } else if (step == 2) {
-        console.log("the things", email, input, password);
+        //console.log("the things", email, input, password);
         db.getCode()
             .then((codes) => {
                 // console.log(
@@ -220,11 +220,31 @@ app.get("/user", (req, res) => {
         .then((data) => {
             //console.log("/userdata", data.rows[0]);
             let { id, first, last, email, bio, profile_pic } = data.rows[0];
+            if (bio === undefined) {
+                bio = "";
+            }
             res.json({ id, first, last, email, bio, profile_pic });
         })
         .catch((err) => {
             res.json({ success: false });
             console.log("err in get/user", err);
+            return;
+        });
+});
+app.post("/userbio", (req, res) => {
+    var userId = req.session.userId;
+    //console.log("req.body.bio, req.body", req.body.bio, req.body);
+    db.updateBio(userId, req.body.bio)
+        .then((data) => {
+            //console.log("data rows bio", data.rows[0].bio);
+            res.json({
+                data: data.rows[0].bio,
+                success: true,
+            });
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in post, userbio", err);
             return;
         });
 });

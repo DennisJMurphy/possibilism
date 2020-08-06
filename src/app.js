@@ -14,6 +14,7 @@ export default class App extends React.Component {
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.newPic = this.newPic.bind(this);
+        //this.bio = this.bio.bind(this);
     }
     // a david idea...async and await.. try at some point
     // async componentDidMount() {
@@ -40,20 +41,15 @@ export default class App extends React.Component {
         });
     }
     newPic(profile_pic) {
-        console.log("profile pic before setstate", profile_pic);
-        this.setState(
-            {
-                profile_pic: profile_pic, // bad boy is guessing
-                uploaderIsVisible: false,
-            },
-            () => {
-                console.log("profile pic in after update in app", profile_pic);
-            }
-        );
+        //console.log("profile pic before setstate", profile_pic);
+        this.setState({
+            profile_pic: profile_pic,
+            uploaderIsVisible: false,
+        });
     }
     // instead of <div>....<React.Fragment>?
     render() {
-        //console.log("this state in app", this.state);
+        console.log("bio in app", this.state.bio);
         return (
             <BrowserRouter>
                 <div>
