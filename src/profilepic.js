@@ -7,12 +7,7 @@ export default function ProfilePic(props) {
 
     return (
         <React.Fragment>
-            <img
-                onClick={props.toggleModal}
-                src={image}
-                alt={(first, last)}
-                height="70px"
-            />
+            <img onClick={props.toggleModal} src={image} alt={(first, last)} />
         </React.Fragment>
     );
 }

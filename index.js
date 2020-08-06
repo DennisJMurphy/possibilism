@@ -239,9 +239,8 @@ app.post("/upload", uploader.single("profile_pic"), s3.upload, (req, res) => {
         console.log("check db inputs, id and url", userId, url);
         // need to add a db insert here for all info
         db.updateImage(userId, url).then((newDbData) => {
-            console.log("newdbdata", newDbData.rows[0].userId);
             res.json({
-                response: url,
+                data: url,
                 success: true,
             });
         });

@@ -4,9 +4,13 @@ import BioEditor from "./bio";
 export default function Profile(props) {
     //console.log("props", props);
     return (
-        <div>
+        <div className="profile">
             <h1>I am profile</h1>
-            <ProfilePic toggleModal={props.toggleModal} />
+            <ProfilePic
+                toggleModal={props.toggleModal}
+                newPic={props.newPic}
+                image={props.image}
+            />
             <BioEditor />
         </div>
     );
