@@ -2,7 +2,7 @@ import React from "react";
 import ProfilePic from "./profilepic";
 import BioEditor from "./bio";
 export default function Profile(props) {
-    console.log("props in profile", props);
+    //console.log("props in profile", props);
     return (
         <div className="profile">
             <h1>
