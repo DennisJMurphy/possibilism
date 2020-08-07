@@ -231,8 +231,18 @@ app.get("/user", (req, res) => {
             return;
         });
 });
-app.get("user/:id", (req, res) => {
-    console.log("req id", req);
+app.get("/other-user/:id", (req, res) => {
+    console.log("params", req.params.id);
+    db.otherUser(req.params.id)
+        .then((data) => {
+            const { first, last, bio, profile_pic, email } = data.rows[0];
+            res.json({ first, last, bio, email, profile_pic });
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in get/otheruser", err);
+            return;
+        });
 });
 app.post("/userbio", (req, res) => {
     var userId = req.session.userId;
