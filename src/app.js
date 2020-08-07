@@ -14,7 +14,7 @@ export default class App extends React.Component {
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.newPic = this.newPic.bind(this);
-        //this.bio = this.bio.bind(this);
+        this.setBio = this.setBio.bind(this);
     }
     // a david idea...async and await.. try at some point
     // async componentDidMount() {
@@ -35,6 +35,14 @@ export default class App extends React.Component {
         //     // then add the data back to state
         //     // call setState({}) and give it the object..
     }
+    setBio(bio) {
+        //console.log("new app bio", bio); all good
+        this.setState({
+            bio: bio,
+            editMode: false,
+        });
+    }
+
     toggleModal() {
         this.setState({
             uploaderIsVisible: !this.state.uploaderIsVisible,

@@ -21,10 +21,9 @@ class Uploader extends React.Component {
             .then(({ data }) => {
                 //console.log("data", data.success, data);
                 if (data.success) {
-                    console.log("uploader data return", data);
-                    console.log("this.props", this.props);
+                    //console.log("uploader data return", data);
+                    //console.log("this.props", this.props);
                     this.setState({
-                        //profile_pic: data.data,
                         error: false,
                     });
                     this.props.newPic(data.data);

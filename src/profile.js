@@ -13,7 +13,7 @@ export default function Profile(props) {
                 newPic={props.newPic}
                 image={props.image}
             />
-            <BioEditor bio={props.bio} />
+            <BioEditor bio={props.bio} setBio={props.setBio} />
         </div>
     );
 }

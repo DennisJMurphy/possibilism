@@ -4,25 +4,19 @@ import axios from "axios";
 class BioEditor extends React.Component {
     constructor(props) {
         super(props);
-        console.log("props", props);
+        console.log("props from bio", props);
         this.state = {
             editMode: false,
+            //bio: this.props.bio,
             buttonText: "edit bio",
-            bio: this.props.bio,
         };
     }
-    // handleChange(e) {
-    //     console.log("e.target.textarea", e.target.textarea);
-    //     this.setState({
-    //         newBio: e.target.textarea.value,
-    //     });
-    // }
     handleChange(e) {
         this.setState({
-            [e.target.name]: e.target.value,
+            bio: e.target.value,
         });
     }
-    toggleModal() {
+    toggleEdit() {
         this.setState({
             editMode: !this.state.editMode,
         });
@@ -35,11 +29,15 @@ class BioEditor extends React.Component {
             .then(({ data }) => {
                 //console.log("data", data.success, data);
                 if (data.success) {
+                    //this.props.newPic(data.data);
                     this.setState({
                         bio: data.data,
                         editMode: false,
                         error: false,
                     });
+
+                    //console.log("data.data?", data.data); it's ok
+                    this.props.setBio(data.data);
                 } else {
                     this.setState({
                         error: true,
@@ -53,18 +51,18 @@ class BioEditor extends React.Component {
             );
     }
     render() {
+        let buttonTextNow = this.state.buttonText;
+        if (this.props.bio == "") {
+            buttonTextNow = "add bio";
+        }
         if (this.state.editMode === false) {
-            if (this.props.bio == "") {
-                this.setState({
-                    buttonText: "add bio",
-                });
-            }
             return (
                 <>
                     <h1>User Bio</h1>
-                    <button onClick={() => this.toggleModal()}>
-                        {this.state.buttonText}
+                    <button onClick={() => this.toggleEdit()}>
+                        {buttonTextNow}
                     </button>
+                    <p>{this.props.bio}</p>
                 </>
             );
         } else if (this.state.editMode === true) {
