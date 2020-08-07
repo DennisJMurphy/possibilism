@@ -57,7 +57,7 @@ export default class App extends React.Component {
     }
     // instead of <div>....<React.Fragment>?
     render() {
-        console.log("bio in app", this.state.bio);
+        //console.log("bio in app", this.state.bio);
         return (
             <BrowserRouter>
                 <div>
@@ -79,7 +79,16 @@ export default class App extends React.Component {
                                 />
                             )}
                         />
-                        <Route path="/user/:id" component={OtherProfile} />
+                        <Route
+                            path="/user/:id"
+                            render={(props) => (
+                                <OtherProfile
+                                    key={props.match.url}
+                                    match={props.match}
+                                    history={props.history}
+                                />
+                            )}
+                        />
                     </div>
                     {this.state.uploaderIsVisible && (
                         <Uploader newPic={this.newPic} />

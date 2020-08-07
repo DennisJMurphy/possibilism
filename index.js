@@ -231,6 +231,9 @@ app.get("/user", (req, res) => {
             return;
         });
 });
+app.get("user/:id", (req, res) => {
+    console.log("req id", req);
+});
 app.post("/userbio", (req, res) => {
     var userId = req.session.userId;
     //console.log("req.body.bio, req.body", req.body.bio, req.body);
