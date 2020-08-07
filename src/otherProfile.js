@@ -7,22 +7,26 @@ export default class OtherProfile extends React.Component {
         this.state = {};
     }
     async componentDidMount() {
-        const { id } = this.props.match.params.id;
+        const { id } = this.props.match.params;
+        //console.log("id", id);
         const { data } = await axios.get("/other-user/" + id);
-        // .then(({ data }) => {
-        console.log("data other profile", data);
-        // });
+        //console.log("data other profile", data);
+        this.setState({
+            first: data.first,
+            last: data.last,
+            profile_pic: data.profile_pic,
+            bio: data.bio,
+        });
+        //console.log("thisstatefirst", this.state.first);
     }
     render() {
         return (
             <>
-                <p>get the deets first</p>
-                {/* <h1> ignore this stuff it's just placeholders
-                    {first}
-                    {last}
+                <h1>
+                    {this.state.first} {this.state.last}
                 </h1>
-                <img source={image} alt={(first, last)} />
-                <p>{bio}</p> */}
+                <img src={this.state.profile_pic} />
+                <p>{this.state.bio}</p>
             </>
         );
     }

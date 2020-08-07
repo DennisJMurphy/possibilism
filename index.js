@@ -232,7 +232,7 @@ app.get("/user", (req, res) => {
         });
 });
 app.get("/other-user/:id", (req, res) => {
-    console.log("params", req.params.id);
+    //console.log("params", req.params);
     db.otherUser(req.params.id)
         .then((data) => {
             const { first, last, bio, profile_pic, email } = data.rows[0];
