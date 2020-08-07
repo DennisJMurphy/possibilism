@@ -8,7 +8,6 @@ export default class OtherProfile extends React.Component {
     }
     async componentDidMount() {
         const { id } = this.props.match.params.id;
-        //console.log("show me params", this.props.match.params.id);
         const { data } = await axios.get("/other-user/" + id);
         // .then(({ data }) => {
         console.log("data other profile", data);
