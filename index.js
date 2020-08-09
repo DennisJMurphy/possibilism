@@ -232,21 +232,21 @@ app.get("/user", (req, res) => {
         });
 });
 app.get("/other-user/:id", (req, res) => {
-    console.log("params", req.params);
-    // if (req.params.id == req.session.userId) {
-    //     res.json({ sameUser: true });
-    // } else {
-    db.otherUser(req.params.id)
-        .then((data) => {
-            const { first, last, bio, profile_pic, email } = data.rows[0];
-            res.json({ first, last, bio, email, profile_pic });
-        })
-        .catch((err) => {
-            res.json({ success: false });
-            console.log("err in get/otheruser", err);
-            return;
-        });
-    // }
+    //console.log("params", req.params);
+    if (req.params.id == req.session.userId) {
+        res.json({ sameUser: true });
+    } else {
+        db.otherUser(req.params.id)
+            .then((data) => {
+                const { first, last, bio, profile_pic, email } = data.rows[0];
+                res.json({ first, last, bio, email, profile_pic });
+            })
+            .catch((err) => {
+                res.json({ success: false });
+                console.log("err in get/otheruser", err);
+                return;
+            });
+    }
 });
 app.post("/userbio", (req, res) => {
     var userId = req.session.userId;
@@ -262,6 +262,31 @@ app.post("/userbio", (req, res) => {
         .catch((err) => {
             res.json({ success: false });
             console.log("err in post, userbio", err);
+            return;
+        });
+});
+app.get("/newUsers", (req, res) => {
+    db.newUsers()
+        .then((result) => {
+            //console.log("db data", result.rows);
+            res.json(result.rows);
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in get/otheruser", err);
+            return;
+        });
+});
+app.get("/search/:userInput", (req, res) => {
+    console.log("req body userinput", req);
+    db.searchUsers(req.params.userInput)
+        .then((result) => {
+            console.log("db search data", result.rows);
+            res.json(result.rows);
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in get/otheruser", err);
             return;
         });
 });

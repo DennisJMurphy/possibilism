@@ -7,20 +7,20 @@ export default class OtherProfile extends React.Component {
         this.state = {};
     }
     async componentDidMount() {
+        //console.log("other Profile did mount!");
         const { id } = this.props.match.params;
-        console.log("id", id);
         const { data } = await axios.get("/other-user/" + id);
-        console.log("data other profile", data);
-        // if (data.sameUser) {
-        //     this.props.history.push("/");
-        // } else {
-        this.setState({
-            first: data.first,
-            last: data.last,
-            profile_pic: data.profile_pic,
-            bio: data.bio,
-        });
-        //  }
+        //console.log("data other profile", data);
+        if (data.sameUser) {
+            this.props.history.push("/");
+        } else {
+            this.setState({
+                first: data.first,
+                last: data.last,
+                profile_pic: data.profile_pic,
+                bio: data.bio,
+            });
+        }
         //console.log("thisstatefirst", this.state.first);
     }
     render() {

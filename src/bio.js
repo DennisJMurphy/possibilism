@@ -4,7 +4,7 @@ import axios from "axios";
 class BioEditor extends React.Component {
     constructor(props) {
         super(props);
-        console.log("props from bio", props);
+        //console.log("props from bio", props);
         this.state = {
             editMode: false,
             //bio: this.props.bio,

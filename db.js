@@ -54,3 +54,13 @@ module.exports.updateBio = (userId, bio) => {
     let q = "UPDATE users SET bio = $2 where id = $1 RETURNING bio";
     return db.query(q, [userId, bio]);
 };
+module.exports.newUsers = () => {
+    let q = "SELECT * FROM users ORDER BY id DESC LIMIT 3";
+    return db.query(q);
+};
+module.exports.searchUsers = (userInput) => {
+    let params = [`${userInput}%`];
+    let q = "SELECT * FROM users WHERE first ILIKE $1 ORDER BY first LIMIT 3 ";
+    console.log("params", params);
+    return db.query(q, params);
+};

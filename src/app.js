@@ -4,6 +4,7 @@ import Header from "./header";
 import Uploader from "./uploader";
 import Profile from "./profile";
 import OtherProfile from "./otherProfile";
+import FindPeople from "./findPeople";
 import axios from "axios";
 import { BrowserRouter, Route } from "react-router-dom";
 export default class App extends React.Component {
@@ -79,6 +80,7 @@ export default class App extends React.Component {
                                 />
                             )}
                         />
+                        <Route path="/users/" render={() => <FindPeople />} />
                         <Route
                             path="/user/:id"
                             render={(props) => (
