@@ -290,6 +290,78 @@ app.get("/search/:userInput", (req, res) => {
             return;
         });
 });
+app.get("/check-friend/:otherId", (req, res) => {
+    var userId = req.session.userId;
+    var otherId = req.params.otherId;
+    //console.log("req.params", req.params.otherId);
+    //console.log("userid, otherid", userId, otherId);
+    db.checkFriend(otherId, userId)
+        .then((result) => {
+            if (result.rows.length == 0) {
+                return res.json({ button: "make friendship request" });
+            }
+            var sender = result.rows[0].sender_id;
+            //console.log("length", result.rows);
+
+            if (result.rows[0].accepted == true) {
+                return res.json({ button: "unfriend" });
+            } else if (result.rows[0].accepted == false) {
+                //console.log("sender, otherId", sender, otherId);
+                if (sender !== otherId) {
+                    return res.json({ button: "accept invite" });
+                } else {
+                    return res.json({ button: "cancel invite" });
+                }
+            } else {
+                res.json({ button: "leave the house" });
+            }
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in get/checkfriend", err);
+            return;
+        });
+});
+app.post("/request/:otherId", (req, res) => {
+    var userId = req.session.userId;
+    var otherId = req.params.otherId;
+    db.request(userId, otherId)
+        .then((result) => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in post request", err);
+            return;
+        });
+});
+app.post("/add-friend/:otherId", (req, res) => {
+    var userId = req.session.userId;
+    var otherId = req.params.otherId;
+    db.addFriend(userId, otherId)
+        .then((result) => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in post add-friend", err);
+            return;
+        });
+});
+app.post("/remove-row/:otherId", (req, res) => {
+    var userId = req.session.userId;
+    var otherId = req.params.otherId;
+    db.removeRow(userId, otherId)
+        .then((result) => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in post request", err);
+            return;
+        });
+});
+
 app.post("/upload", uploader.single("profile_pic"), s3.upload, (req, res) => {
     var userId = req.session.userId;
     //req.file gets uploaded

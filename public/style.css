@@ -3,6 +3,11 @@
     flex-direction: row;
     justify-content: space-between;
     height: 80px;
+    border-bottom: cadetblue;
+    border-style: dotted;
+    border-top: white;
+    border-right: white;
+    border-left: white;
 }
 #header img {
     height: 70px;

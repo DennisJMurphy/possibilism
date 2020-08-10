@@ -61,6 +61,25 @@ module.exports.newUsers = () => {
 module.exports.searchUsers = (userInput) => {
     let params = [`${userInput}%`];
     let q = "SELECT * FROM users WHERE first ILIKE $1 ORDER BY first LIMIT 3 ";
-    console.log("params", params);
+    //console.log("params", params);
     return db.query(q, params);
+};
+module.exports.checkFriend = (otherId, userId) => {
+    let q =
+        "SELECT * FROM friendships WHERE (recipient_id = $1 AND sender_id = $2) OR (recipient_id = $2 AND sender_id = $1)";
+    return db.query(q, [otherId, userId]);
+};
+module.exports.request = (userId, otherId) => {
+    let q = "INSERT INTO friendships (sender_id, recipient_id) VALUES ($1,$2)";
+    return db.query(q, [otherId, userId]);
+};
+module.exports.addFriend = (userId, otherId) => {
+    let q =
+        "UPDATE friendships SET accepted='true' WHERE (recipient_id = $1 AND sender_id = $2) OR (recipient_id = $2 AND sender_id = $1)";
+    return db.query(q, [otherId, userId]);
+};
+module.exports.removeRow = (userId, otherId) => {
+    let q =
+        "DELETE FROM friendships WHERE (recipient_id = $1 AND sender_id = $2) OR (recipient_id = $2 AND sender_id = $1)";
+    return db.query(q, [otherId, userId]);
 };
