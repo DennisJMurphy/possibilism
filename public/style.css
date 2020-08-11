@@ -20,3 +20,8 @@
 .friends {
     height: 90px;
 }
+.frendz {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

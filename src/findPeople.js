@@ -21,9 +21,9 @@ export default function FindPeople() {
             (async () => {
                 try {
                     const { data } = await axios.get(`/search/${userInput}`);
-                    console.log("users in find people", data);
+                    //console.log("users in find people", data);
                     setUsers(data);
-                    console.log("users", users);
+                    //console.log("users", users);
                 } catch (err) {
                     console.log("axios error findPeople search", err);
                 }
@@ -35,7 +35,6 @@ export default function FindPeople() {
         <>
             <h1>Find People</h1>
             <input onChange={(e) => setUserInput(e.target.value)} />
-            <button onClick={(e) => this.submit()}>Submit</button>
             {users &&
                 users.map((user, id) => (
                     <div key={id}>

@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const compression = require("compression");
+const server = require("http").Server(app); // raw node server for socket.io
+const io = require("socket.io")(server, { origins: "localhost:8080" }); // add heroku here if needed
 const db = require("./db"); // adding .js is optional
 const ses = require("./ses");
 const cookieSession = require("cookie-session");
@@ -278,11 +280,11 @@ app.get("/newUsers", (req, res) => {
         });
 });
 app.get("/search/:userInput", (req, res) => {
-    console.log("req body userinput", req);
+    //console.log("req body userinput", req);
     db.searchUsers(req.params.userInput)
         .then((result) => {
-            console.log("db search data", result.rows);
-            res.json(result.rows);
+            //console.log("db search data", result.rows);
+            return res.json(result.rows);
         })
         .catch((err) => {
             res.json({ success: false });
@@ -361,7 +363,18 @@ app.post("/remove-row/:otherId", (req, res) => {
             return;
         });
 });
-
+app.get("/friends-wannabes", (req, res) => {
+    var userId = req.session.userId;
+    db.getFrenebies(userId)
+        .then((data) => {
+            return res.json(data.rows);
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in get frenebies", err);
+            return;
+        });
+});
 app.post("/upload", uploader.single("profile_pic"), s3.upload, (req, res) => {
     var userId = req.session.userId;
     //req.file gets uploaded
@@ -391,6 +404,7 @@ app.get("*", function (req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
-app.listen(8080, function () {
+server.listen(8080, function () {
     console.log("I'm listening.");
 });
+// changed the above from app.listen to server.listen
