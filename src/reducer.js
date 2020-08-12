@@ -1,7 +1,7 @@
 export default function reducer(state = {}, action) {
     //console.log("action in reducer", action);
     if (action.type == "RECEIVE_FRIENDS_WANNABES") {
-        console.log("action friendswannabes reducer", action.friendsWannabes);
+        //console.log("action friendswannabes reducer", action.friendsWannabes);
         return Object.assign({}, state, {
             friendsWannabes: action.friendsWannabes,
         });

@@ -2,7 +2,7 @@ import axios from "./axios";
 export async function receiveFriendsWannabes() {
     try {
         const { data } = await axios.get("/friends-wannabes");
-        console.log("users in friendlist", data);
+        //console.log("users in friendlist", data);
         return {
             type: "RECEIVE_FRIENDS_WANNABES",
             friendsWannabes: data,

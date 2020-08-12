@@ -6,7 +6,7 @@ import Profile from "./profile";
 import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
 import Friends from "./friends";
-import axios from "axios";
+import axios from "./axios";
 import { BrowserRouter, Route } from "react-router-dom";
 export default class App extends React.Component {
     constructor(props) {

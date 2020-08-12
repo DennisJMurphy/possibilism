@@ -22,16 +22,22 @@ export default function Friends() {
             state.friendsWannabes &&
             state.friendsWannabes.filter((keepers) => !keepers.accepted)
     );
-    console.log("friends", friends);
+    //console.log("friends", friends);
     return (
         <>
             <h1>Friends and Wannabes</h1>
-            <h1>Friends</h1>
+            <h2>Friends</h2>
             <div className="frendz">
                 {friends &&
                     friends.map((user, id) => (
                         <div key={id}>
-                            <img src={user.profile_pic} className="friends" />
+                            <img
+                                onClick={() => {
+                                    window.location.href = `/user/${user.id}`;
+                                }}
+                                src={user.profile_pic}
+                                className="friends"
+                            />
                             <p>
                                 {user.first} {user.last}
                             </p>
@@ -43,12 +49,18 @@ export default function Friends() {
                         </div>
                     ))}
             </div>
-            <h1>Wannabes</h1>
+            <h2>Wannabes</h2>
             <div className="frendz">
                 {wannabes &&
                     wannabes.map((user, id) => (
                         <div key={id}>
-                            <img src={user.profile_pic} className="friends" />
+                            <img
+                                onClick={() => {
+                                    window.location.href = `/user/${user.id}`;
+                                }}
+                                src={user.profile_pic}
+                                className="friends"
+                            />
                             <p>
                                 {user.first} {user.last}
                             </p>

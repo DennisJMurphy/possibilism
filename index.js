@@ -281,6 +281,10 @@ app.get("/newUsers", (req, res) => {
 });
 app.get("/search/:userInput", (req, res) => {
     //console.log("req body userinput", req);
+    if (req.params.userInput == " ") {
+        console.log("aha, you didnt crash");
+        return res.json({});
+    }
     db.searchUsers(req.params.userInput)
         .then((result) => {
             //console.log("db search data", result.rows);

@@ -38,7 +38,13 @@ export default function FindPeople() {
             {users &&
                 users.map((user, id) => (
                     <div key={id}>
-                        <img src={user.profile_pic} className="friends" />
+                        <img
+                            onClick={() => {
+                                window.location.href = `/user/${user.id}`;
+                            }}
+                            src={user.profile_pic}
+                            className="friends"
+                        />
                         <p>
                             {user.first} {user.last}
                         </p>

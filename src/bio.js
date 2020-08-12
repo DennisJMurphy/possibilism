@@ -1,6 +1,6 @@
 // needs to be class based because of the state bit
 import React from "react";
-import axios from "axios";
+import axios from "./axios";
 class BioEditor extends React.Component {
     constructor(props) {
         super(props);
