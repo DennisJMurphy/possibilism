@@ -15,10 +15,14 @@ export async function receiveFriendsWannabes() {
 export async function acceptFriendship(otherId) {
     try {
         const { data } = await axios.post(`/add-friend/${otherId}`);
-        return {
-            type: "ACCEPT_FRIENDSHIP",
-            newFriend: data,
-        };
+        console.log("ather d", otherId);
+        console.log("data from action", data); // success: true, so what?
+        if (data.success) {
+            return {
+                type: "ACCEPTF",
+                otherId,
+            };
+        }
     } catch (err) {
         console.log("axios error get friends", err);
     }
@@ -26,10 +30,12 @@ export async function acceptFriendship(otherId) {
 export async function endFriendship(otherId) {
     try {
         const { data } = await axios.post(`/remove-row/${otherId}`);
-        return {
-            type: "END_FRIENDSHIP",
-            exFriend: data,
-        };
+        if (data.success) {
+            return {
+                type: "END_FRIENDSHIP",
+                otherId,
+            };
+        }
     } catch (err) {
         console.log("axios error end friendship", err);
     }

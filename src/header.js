@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 export default function Header(props) {
     //console.log("header props", props);
     return (
-        <div id="header">
+        <nav id="header">
             <Logo />
             <Link to="/users/"> Find People</Link>
             <Link to="/friends"> Friends</Link>
             <Link to="/"> Profile</Link>
             <ProfilePic image={props.image} />
-        </div>
+        </nav>
     );
 }

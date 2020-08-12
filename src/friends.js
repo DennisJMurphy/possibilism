@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FriendButton from "./friendButton";
-import { receiveFriendsWannabes } from "./actions";
+import {
+    receiveFriendsWannabes,
+    acceptFriendship,
+    endFriendship,
+} from "./actions";
 
 export default function Friends() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(receiveFriendsWannabes());
     }, []);
-    //console.log(state);
     const friends = useSelector(
         (state) =>
-            //state.friendsWannabes;
             state.friendsWannabes &&
             state.friendsWannabes.filter((keepers) => keepers.accepted)
     );
     const wannabes = useSelector(
         (state) =>
-            //state.friendsWannabes;
             state.friendsWannabes &&
             state.friendsWannabes.filter((keepers) => !keepers.accepted)
     );
@@ -34,7 +35,11 @@ export default function Friends() {
                             <p>
                                 {user.first} {user.last}
                             </p>
-                            <button>unfriend</button>
+                            <button
+                                onClick={() => dispatch(endFriendship(user.id))}
+                            >
+                                unfriend
+                            </button>
                         </div>
                     ))}
             </div>
@@ -47,7 +52,18 @@ export default function Friends() {
                             <p>
                                 {user.first} {user.last}
                             </p>
-                            <button>accept</button>
+                            <button
+                                onClick={() =>
+                                    dispatch(acceptFriendship(user.id))
+                                }
+                            >
+                                accept
+                            </button>
+                            <button
+                                onClick={() => dispatch(endFriendship(user.id))}
+                            >
+                                reject
+                            </button>
                         </div>
                     ))}
             </div>

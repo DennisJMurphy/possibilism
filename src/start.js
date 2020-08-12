@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import reduxPromise from "redux-promise";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "./reducer";
+import { init } from "./socket";
 
 const store = createStore(
     reducer,
@@ -32,6 +33,7 @@ if (isLoggedIn == false) {
             <App />
         </Provider>
     );
+    init(store);
 }
 
 ReactDOM.render(elem, document.querySelector("main"));

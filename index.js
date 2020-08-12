@@ -407,4 +407,13 @@ app.get("*", function (req, res) {
 server.listen(8080, function () {
     console.log("I'm listening.");
 });
+io.on("connection", (socket) => {
+    socket.on("chatMessage", (data) => {
+        // send the message to eveybody...
+        // can't get the userId from the session because there's no session
+        // socket has params = the handshake, the node request object
+        // need to use the cookie session middleware to verify the cookie in
+        // the socket params
+    });
+});
 // changed the above from app.listen to server.listen
