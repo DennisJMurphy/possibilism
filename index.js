@@ -6,6 +6,15 @@ const io = require("socket.io")(server, { origins: "localhost:8080" }); // add h
 const db = require("./db"); // adding .js is optional
 const ses = require("./ses");
 const cookieSession = require("cookie-session");
+// new cookiesession middleware for io
+const cookieSessionMiddleware = cookieSession({
+    secret: `There is still no need for alarm.`,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+});
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 app.use(
     cookieSession({
         secret: `There is no need for alarm.`,
@@ -55,12 +64,12 @@ const uploader = multer({
     },
 });
 //// file upload business bottom //////
-// const csurf = require("csurf");
-// app.use(csurf());
-// app.use(function (req, res, next) {
-//     res.cookie("mytoken", req.csrfToken());
-//     next();
-// });
+const csurf = require("csurf");
+app.use(csurf());
+app.use(function (req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 ////// end of initial setup and middleware/////
 
 app.get("/", function (req, res) {
@@ -313,7 +322,7 @@ app.get("/check-friend/:otherId", (req, res) => {
                 return res.json({ button: "unfriend" });
             } else if (result.rows[0].accepted == false) {
                 //console.log("sender, otherId", sender, otherId);
-                if (sender !== otherId) {
+                if (sender == otherId) {
                     return res.json({ button: "accept invite" });
                 } else {
                     return res.json({ button: "cancel invite" });
@@ -411,8 +420,28 @@ app.get("*", function (req, res) {
 server.listen(8080, function () {
     console.log("I'm listening.");
 });
+// changed the above from app.listen to server.listen for io.session
 io.on("connection", (socket) => {
     socket.on("chatMessage", (data) => {
+        if (!socket.request.session.userId) {
+            return socket.disconnect(true);
+        }
+        const userId = socket.request.session.userId;
+        if (!userId) {
+            return socket.disconnect();
+        }
+        socket.on("chatMessage", async (data) => {
+            const user = await db.getUserById(userId);
+            //io.emit('chatMessage') //to all connected clients
+            // right so userId is the active user, we need their pic and name to go with the message
+            // but we also need all that info for all the other messages...
+        });
+        //1: chatMessages event must be emitted, 10 most recent messages
+        //2: chatMessage event handler
+        // db query to get chats
+        // join to get deets and chats gother
+        // emit to the front end socket.emit - sends only to the person who just connected
+
         // send the message to eveybody...
         // can't get the userId from the session because there's no session
         // socket has params = the handshake, the node request object
@@ -420,4 +449,3 @@ io.on("connection", (socket) => {
         // the socket params
     });
 });
-// changed the above from app.listen to server.listen

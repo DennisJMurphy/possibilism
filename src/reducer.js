@@ -29,26 +29,11 @@ export default function reducer(state = {}, action) {
             ),
         });
     }
-
-    // friendsWannabes: state.friendsWannabes.map((id) => {
-    //     if (id.id != action.otherId) {
-    //         return id;
-    //     } else {
-    //         return {
-    //         friendsWannabes.filter(id => id !==action.otherId)
-    //     }
-    // }),
-    // });
-    // if (action.type == "ACCEPT_FRIENDSHIP") {
-    //     return Object.assign({}, state, {
-    //         friendsWannabes: action.friendsWannabes,
-    //     });
-    // }
-    // if (action.type == "END_FRIENDSHIP") {
-    //     return Object.assign({}, state, {
-    //         friendsWannabes: action.friendsWannabes,
-    //     });
-    // }
+    if (action.type == "GET_CHAT_MESSAGES") {
+        return Object.assign({}, state, {
+            chatMessages: action.chatMessages,
+        });
+    }
 
     return state;
 }

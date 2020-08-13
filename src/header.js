@@ -9,6 +9,7 @@ export default function Header(props) {
             <Logo />
             <Link to="/users/"> Find People</Link>
             <Link to="/friends"> Friends</Link>
+            <Link to="/chat">Chat</Link>
             <Link to="/"> Profile</Link>
             <ProfilePic image={props.image} />
         </nav>

@@ -7,7 +7,9 @@ import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
 import Friends from "./friends";
 import axios from "./axios";
+import chat from "./chat";
 import { BrowserRouter, Route } from "react-router-dom";
+import Chat from "./chat";
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -83,6 +85,7 @@ export default class App extends React.Component {
                         />
                         <Route path="/users/" render={() => <FindPeople />} />
                         <Route path="/friends" render={() => <Friends />} />
+                        <Route path="/chat" render={() => <Chat />} />
                         <Route
                             path="/user/:id"
                             render={(props) => (

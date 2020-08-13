@@ -9,3 +9,5 @@ compare = promisify(compare);
 module.exports.compare = compare;
 module.exports.hash = (plainTxPw) =>
     genSalt().then((salt) => hash(plainTxPw, salt));
+
+// no comment

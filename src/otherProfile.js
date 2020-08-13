@@ -27,14 +27,14 @@ export default class OtherProfile extends React.Component {
     }
     render() {
         return (
-            <>
+            <div className="profile">
                 <h1>
                     {this.state.first} {this.state.last}
                 </h1>
                 <img src={this.state.profile_pic} />
                 <p>{this.state.bio}</p>
                 <FriendButton otherId={this.state.id} />
-            </>
+            </div>
         );
     }
 }

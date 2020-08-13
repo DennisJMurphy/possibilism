@@ -71,7 +71,7 @@ module.exports.checkFriend = (otherId, userId) => {
 };
 module.exports.request = (userId, otherId) => {
     let q = "INSERT INTO friendships (sender_id, recipient_id) VALUES ($1,$2)";
-    return db.query(q, [otherId, userId]);
+    return db.query(q, [userId, otherId]);
 };
 module.exports.addFriend = (userId, otherId) => {
     let q =
@@ -93,4 +93,12 @@ module.exports.getFrenebies = (userId) => {
     OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)
   `;
     return db.query(q, [userId]);
+};
+module.exports.addChatMessage = (chatMessage, userId) => {
+    const q = "INSERT INTO chat_messages (message, sender_id) VALUES ($1,$2)";
+    return db.query(q, [chatMessage, userId]);
+};
+module.exports.getChatMessages = () => {
+    const q = "SELECT * FROM chat_messages ORDER BY id DESC LIMIT 10";
+    return db.query(q);
 };
