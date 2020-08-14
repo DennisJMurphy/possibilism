@@ -25,3 +25,25 @@
     flex-direction: row;
     justify-content: space-around;
 }
+.chat-window img {
+    height: 50px;
+}
+.chat-window {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.picandname {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    border-style: dotted;
+    border-width: 2px;
+    border-color: tomato;
+    padding: 5px;
+}
+.names {
+    margin-left: 10px;
+    margin-right: 10px;
+}

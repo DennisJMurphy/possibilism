@@ -40,15 +40,11 @@ export async function endFriendship(otherId) {
         console.log("axios error end friendship", err);
     }
 }
-export async function getChatMessages() {
-    try {
-        const { data } = await axios.get("/chat-messages");
-        return {
-            type: "GET_CHAT_MESSAGES",
-            chatMessages: data,
-        };
-        //setUsers(data);
-    } catch (err) {
-        console.log("axios error get friends", err);
-    }
+export async function chatMessages(data) {
+    //console.log("actionsdata", data);
+    return {
+        type: "GET_CHAT_MESSAGES",
+        chatMessages: data,
+    };
+    //setUsers(data);
 }

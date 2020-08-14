@@ -99,6 +99,13 @@ module.exports.addChatMessage = (chatMessage, userId) => {
     return db.query(q, [chatMessage, userId]);
 };
 module.exports.getChatMessages = () => {
-    const q = "SELECT * FROM chat_messages ORDER BY id DESC LIMIT 10";
+    const q = `
+    SELECT * 
+    FROM chat_messages 
+    JOIN users 
+    ON sender_id = users.id 
+    ORDER BY chat_messages.id 
+    DESC LIMIT 10 
+    `;
     return db.query(q);
 };

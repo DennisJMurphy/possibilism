@@ -8,6 +8,9 @@ import reduxPromise from "redux-promise";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "./reducer";
 import { init } from "./socket";
+import { chatMessages, chatMessage } from "./actions";
+import * as io from "socket.io-client";
+export let socket;
 
 const store = createStore(
     reducer,
@@ -18,12 +21,13 @@ import App from "./app"; // no curly brackets if it's a default
 
 let elem;
 
-let isLoggedIn; //= null;
+let isLoggedIn = location.pathname != "/welcome"; //= null;
 if (location.pathname === "/welcome") {
     isLoggedIn = false;
 } else {
     isLoggedIn = true;
 }
+
 //console.log("isloggedin, start.js", isLoggedIn);
 if (isLoggedIn == false) {
     elem = <Welcome />;

@@ -15,12 +15,12 @@ app.use(cookieSessionMiddleware);
 io.use(function (socket, next) {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
-app.use(
-    cookieSession({
-        secret: `There is no need for alarm.`,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+// app.use( // redundant
+//     cookieSession({
+//         secret: `There is no need for alarm.`,
+//         maxAge: 1000 * 60 * 60 * 24 * 14,
+//     })
+// );
 const s3 = require("./s3");
 //const { s3Url } = require("./config");
 const { hash, compare } = require("./bc");
@@ -422,30 +422,51 @@ server.listen(8080, function () {
 });
 // changed the above from app.listen to server.listen for io.session
 io.on("connection", (socket) => {
-    socket.on("chatMessage", (data) => {
-        if (!socket.request.session.userId) {
-            return socket.disconnect(true);
-        }
-        const userId = socket.request.session.userId;
-        if (!userId) {
-            return socket.disconnect();
-        }
-        socket.on("chatMessage", async (data) => {
-            const user = await db.getUserById(userId);
-            //io.emit('chatMessage') //to all connected clients
-            // right so userId is the active user, we need their pic and name to go with the message
-            // but we also need all that info for all the other messages...
-        });
-        //1: chatMessages event must be emitted, 10 most recent messages
-        //2: chatMessage event handler
-        // db query to get chats
-        // join to get deets and chats gother
-        // emit to the front end socket.emit - sends only to the person who just connected
-
-        // send the message to eveybody...
-        // can't get the userId from the session because there's no session
-        // socket has params = the handshake, the node request object
-        // need to use the cookie session middleware to verify the cookie in
-        // the socket params
+    console.log(`socket wih the id ${socket.id} is now connected`);
+    console.log("socket.request.session", socket.request.session);
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+    socket.on("disconnect", function () {
+        console.log(`socket wih the id ${socket.id} is now disconnected`);
     });
+    const userId = socket.request.session.userId;
+    // // if (!userId) {
+    // //     return socket.disconnect(); // this is done twice, shouldn't be needed
+    // // }
+    (async () => {
+        const { rows } = await db.getChatMessages();
+        //console.log("messages", rows);
+        socket.emit("chatMessages", rows);
+    })();
+
+    socket.on("chatMessage", (data) => {
+        console.log("chatMessage Data", data);
+        (async () => {
+            const { rows } = await db.userData(userId);
+            console.log("chat message userId");
+        })();
+    });
+
+    //io.emit('chatMessage') //to all connected clients
+    // right so userId is the active user, we need their pic and name to go with the message
+    // but we also need all that info for all the other messages...
+    //});
+    ///socket.on("chatMessages", async () => {
+    //console.log("are we getting to socket?");
+
+    ///});
+    // io to everyone, socket to one
+    //1: chatMessages event must be emitted, 10 most recent messages
+    //2: chatMessage event handler
+    // db query to get chats
+    // join to get deets and chats gother - done for initial pull
+    // emit to the front end socket.emit - sends only to the person who just connected
+
+    // send the message to eveybody...
+    // can't get the userId from the session because there's no session
+    // socket has params = the handshake, the node request object
+    // need to use the cookie session middleware to verify the cookie in
+    // the socket params
+    //});
 });

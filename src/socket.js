@@ -5,7 +5,8 @@ export let socket;
 
 export const init = (store) => {
     if (!socket) {
-        console.log("socket is on!");
+        //console.log("socket is on!");
+
         socket = io.connect();
 
         socket.on("chatMessages", (msgs) => store.dispatch(chatMessages(msgs)));
