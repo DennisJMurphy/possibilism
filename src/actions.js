@@ -48,3 +48,10 @@ export async function chatMessages(data) {
     };
     //setUsers(data);
 }
+export async function chatMessage(data) {
+    console.log("chatMessage in actions Data", data);
+    return {
+        type: "ADD_CHAT_MESSAGE",
+        newMessage: data,
+    };
+}

@@ -1,3 +1,5 @@
+import { chatMessages } from "./actions";
+
 export default function reducer(state = {}, action) {
     //console.log("action in reducer", action);
     if (action.type == "RECEIVE_FRIENDS_WANNABES") {
@@ -34,6 +36,18 @@ export default function reducer(state = {}, action) {
             chatMessages: action.chatMessages,
         });
     }
-
+    //console.log("state get chat messages", state.chatMessages);
+    if (action.type == "ADD_CHAT_MESSAGE") {
+        //console.log("action data reducer", action.newMessage);
+        //let newState = [...state.chatMessages, action.chatMessages];
+        //console.log("newState", newState);
+        return Object.assign({}, state, {
+            chatMessages: [...state.chatMessages, action.newMessage],
+        });
+    }
+    ///console.log("chatMessages after", state.chatMessages);
     return state;
 }
+// return Object.assign({}, state, {
+//     friendsWannabes: action.friendsWannabes,
+// });

@@ -109,3 +109,14 @@ module.exports.getChatMessages = () => {
     `;
     return db.query(q);
 };
+module.exports.getChatMessage = () => {
+    const q = `
+    SELECT * 
+    FROM chat_messages 
+    JOIN users 
+    ON sender_id = users.id 
+    ORDER BY chat_messages.id 
+    DESC LIMIT 1
+    `;
+    return db.query(q);
+};

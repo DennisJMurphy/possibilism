@@ -421,9 +421,9 @@ server.listen(8080, function () {
     console.log("I'm listening.");
 });
 // changed the above from app.listen to server.listen for io.session
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
     console.log(`socket wih the id ${socket.id} is now connected`);
-    console.log("socket.request.session", socket.request.session);
+    //console.log("socket.request.session", socket.request.session);
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
@@ -434,18 +434,18 @@ io.on("connection", (socket) => {
     // // if (!userId) {
     // //     return socket.disconnect(); // this is done twice, shouldn't be needed
     // // }
-    (async () => {
-        const { rows } = await db.getChatMessages();
-        //console.log("messages", rows);
-        socket.emit("chatMessages", rows);
-    })();
 
-    socket.on("chatMessage", (data) => {
-        console.log("chatMessage Data", data);
-        (async () => {
-            const { rows } = await db.userData(userId);
-            console.log("chat message userId");
-        })();
+    const { rows } = await db.getChatMessages();
+    //console.log("messages", rows);
+    socket.emit("chatMessages", rows.reverse());
+
+    socket.on("chatMessage", async (data) => {
+        //console.log("chat message data, userID, rows", data, userId, rows);
+        await db.addChatMessage(data, userId);
+        const newMessage = await db.getChatMessage();
+        //console.log("newmessage", newMessage);
+        //console.log("newmessage rows", newMessage.rows);
+        io.emit("chatMessage", newMessage.rows[0]);
     });
 
     //io.emit('chatMessage') //to all connected clients

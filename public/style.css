@@ -30,7 +30,7 @@
 }
 .chat-window {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
 }
 .picandname {
     display: flex;
