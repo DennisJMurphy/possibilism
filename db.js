@@ -120,3 +120,16 @@ module.exports.getChatMessage = () => {
     `;
     return db.query(q);
 };
+module.exports.removeUserFriends = (userId) => {
+    let q =
+        "DELETE FROM friendships WHERE (recipient_id = $1) OR (sender_id = $1)";
+    return db.query(q, [userId]);
+};
+module.exports.removeUserChats = (userId) => {
+    let q = "DELETE FROM chat_messages WHERE sender_id = $1";
+    return db.query(q, [userId]);
+};
+module.exports.removeUser = (userId) => {
+    let q = "DELETE FROM users WHERE id = $1";
+    return db.query(q, [userId]);
+};

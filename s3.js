@@ -42,3 +42,20 @@ exports.upload = function (req, res, next) {
             res.sendStatus(500);
         });
 };
+exports.deletePic = function (req, res, next) {
+    console.log("delete pic req filename", req);
+    if (!req) {
+        console.log("AWS send delete failure");
+        return res.sendStatus(500);
+    }
+    const filename = req;
+    var params = {
+        Bucket: "socialnetwork23",
+        Key: filename,
+    };
+    // return s3.deleteObject(params).promise();
+    s3.deleteObject(params, function (err, data) {
+        if (err) console.log(err, err.stack);
+        else console.log("delete object data", data);
+    });
+};

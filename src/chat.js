@@ -7,13 +7,21 @@ export default function Chat(props) {
     const [chatMessage, setChatMessage] = useState("");
     //const elemRef = useRef();
     const chatMessages = useSelector((state) => state.chatMessages);
-    console.log("chat component state.chatmessages", chatMessages);
+    //console.log("chat component state.chatmessages", chatMessages);
     const handleChange = (e) => {
         setChatMessage(e.target.value);
         //console.log(chatMessage);
     };
+    // const chatTracking = () => {
+    //     elemRef.current.scrollTop =
+    //         elemRef.current.scrollHeight - elemRef.current.clientHeight;
+    // };
+    // useEffect(() => {
+    //     chatTracking();
+    // });
     function click() {
         socket.emit("chatMessage", chatMessage);
+        // chatTracking();
     }
     return (
         <React.Fragment>

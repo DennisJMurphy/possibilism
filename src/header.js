@@ -11,6 +11,8 @@ export default function Header(props) {
             <Link to="/friends"> Friends</Link>
             <Link to="/chat">Chat</Link>
             <Link to="/"> Profile</Link>
+            <Link to="/logout">Logout</Link>
+            <Link to="/delete">Delete Profile</Link>
             <ProfilePic image={props.image} />
         </nav>
     );

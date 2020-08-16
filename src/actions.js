@@ -15,8 +15,8 @@ export async function receiveFriendsWannabes() {
 export async function acceptFriendship(otherId) {
     try {
         const { data } = await axios.post(`/add-friend/${otherId}`);
-        console.log("ather d", otherId);
-        console.log("data from action", data); // success: true, so what?
+        //console.log("ather d", otherId);
+        //console.log("data from action", data); // success: true, so what?
         if (data.success) {
             return {
                 type: "ACCEPTF",
@@ -49,7 +49,7 @@ export async function chatMessages(data) {
     //setUsers(data);
 }
 export async function chatMessage(data) {
-    console.log("chatMessage in actions Data", data);
+    //console.log("chatMessage in actions Data", data);
     return {
         type: "ADD_CHAT_MESSAGE",
         newMessage: data,

@@ -363,6 +363,11 @@ app.post("/add-friend/:otherId", (req, res) => {
             return;
         });
 });
+app.post("/logout-user", (req, res) => {
+    req.session.userId = undefined;
+    res.redirect("/");
+});
+
 app.post("/remove-row/:otherId", (req, res) => {
     var userId = req.session.userId;
     var otherId = req.params.otherId;
@@ -394,9 +399,21 @@ app.post("/upload", uploader.single("profile_pic"), s3.upload, (req, res) => {
     //console.log("req.file", req.file.filename);
     // req. body is the rest of the input fields
     if (req.file) {
+        db.userData(userId).then((data) => {
+            if (data.rows[0].profile_pic) {
+                const profilePic = data.rows[0].profile_pic;
+                const filename = profilePic.replace(
+                    "https://s3.amazonaws.com/socialnetwork23/",
+                    ""
+                );
+                s3.deletePic(filename);
+            } else {
+                console.log("no previous pic");
+            }
+        });
         var url =
             "https://s3.amazonaws.com/socialnetwork23/" + req.file.filename;
-        console.log("check db inputs, id and url", userId, url);
+        //console.log("check db inputs, id and url", userId, url);
         // need to add a db insert here for all info
         db.updateImage(userId, url).then((newDbData) => {
             res.json({
@@ -410,11 +427,59 @@ app.post("/upload", uploader.single("profile_pic"), s3.upload, (req, res) => {
         });
     }
 });
+app.post("/delete-user", (req, res) => {
+    var userId = req.session.userId;
+    //removeUserFriends, removeUserChats, removeUser
+    // delete photos from AWN, clear the chat object
+    db.userData(userId).then((data) => {
+        const profilePic = data.rows[0].profile_pic;
+        const filename = profilePic.replace(
+            "https://s3.amazonaws.com/socialnetwork23/",
+            ""
+        );
+        //console.log("filename before deletepic", filename);
+        s3.deletePic(filename);
+        // .then((data) => {
+        //     console.log("filename", filename);
+        //     return data;
+        // });
+    });
+    db.removeUserFriends(userId)
+        .then(() => {
+            db.removeUserChats(userId)
+                .then(() => {
+                    db.removeUser(userId)
+                        .then(() => {
+                            req.session = null;
+                            res.redirect("/*");
+                        })
+                        .catch((err) => {
+                            res.json({ success: false });
+                            console.log("err in remove user", err);
+                            return;
+                        });
+                })
+                .catch((err) => {
+                    res.json({ success: false });
+                    console.log("err in removeUserChats", err);
+                    return;
+                });
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in removeUserFriends", err);
+            return;
+        });
+});
 
 // get * must be the last route
 // it ensures that the app will be running regardless of the url
 app.get("*", function (req, res) {
-    res.sendFile(__dirname + "/index.html");
+    if (!req.session.userId) {
+        res.redirect("/welcome");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
 });
 
 server.listen(8080, function () {
