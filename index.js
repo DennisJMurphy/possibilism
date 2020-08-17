@@ -8,7 +8,7 @@ const ses = require("./ses");
 const cookieSession = require("cookie-session");
 // new cookiesession middleware for io
 const cookieSessionMiddleware = cookieSession({
-    secret: `There is still no need for alarm.`,
+    secret: `hamburgers with cheese`,
     maxAge: 1000 * 60 * 60 * 24 * 14,
 });
 app.use(cookieSessionMiddleware);
