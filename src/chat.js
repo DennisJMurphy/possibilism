@@ -5,28 +5,27 @@ import { getChatMessages, addChatMessage, chatMessages } from "./actions";
 
 export default function Chat(props) {
     const [chatMessage, setChatMessage] = useState("");
-    //const elemRef = useRef();
+    const elemRef = useRef();
     const chatMessages = useSelector((state) => state.chatMessages);
     //console.log("chat component state.chatmessages", chatMessages);
     const handleChange = (e) => {
         setChatMessage(e.target.value);
-        //console.log(chatMessage);
+        //console.log(elemRef);
     };
-    // const chatTracking = () => {
-    //     elemRef.current.scrollTop =
-    //         elemRef.current.scrollHeight - elemRef.current.clientHeight;
-    // };
-    // useEffect(() => {
-    //     chatTracking();
-    // });
+    const chatTracking = () => {
+        elemRef.current.scrollIntoView({ block: "end", behavior: "smooth" });
+    };
+    useEffect(chatTracking, [chatMessages]);
+
     function click() {
         socket.emit("chatMessage", chatMessage);
+        chatTracking();
         // chatTracking();
     }
     return (
         <React.Fragment>
             <h2>Chat room! Share ideas!</h2>
-            <div className="chat-window">
+            <div className="chat-window" ref={elemRef}>
                 {chatMessages &&
                     chatMessages.map((user, created_at) => (
                         <div key={created_at}>
