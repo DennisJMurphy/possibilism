@@ -225,6 +225,9 @@ app.post("/register", (req, res) => {
             return;
         });
 });
+app.post("/register-project", (req, res) => {
+    db.addProjectInfo(); // you were here
+});
 app.get("/user", (req, res) => {
     var userId = req.session.userId;
     db.userData(userId)

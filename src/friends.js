@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FriendButton from "./friendButton";
+//import FriendButton from "./friendButton";
 import {
     receiveFriendsWannabes,
     acceptFriendship,

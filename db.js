@@ -133,3 +133,13 @@ module.exports.removeUser = (userId) => {
     let q = "DELETE FROM users WHERE id = $1";
     return db.query(q, [userId]);
 };
+module.exports.addProjectInfo = (
+    name,
+    category,
+    summary,
+    primary_metric_desc
+) => {
+    let q =
+        "INSERT INTO projects (name, category, summary, primary_metric_desc) VALUES ($1,$2,$3,$4)";
+    return db.query(q, [name, category, summary, primary_metric_desc]);
+};

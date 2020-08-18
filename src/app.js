@@ -21,11 +21,6 @@ export default class App extends React.Component {
         this.newPic = this.newPic.bind(this);
         this.setBio = this.setBio.bind(this);
     }
-    // a david idea...async and await.. try at some point
-    // async componentDidMount() {
-    //     const { data } = await Axios.get('/user');
-    //     this.setState({ data });
-    // }///////
 
     componentDidMount() {
         //console.log("app has mounted!!!!");

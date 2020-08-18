@@ -1,4 +1,5 @@
 -- I called my database "caper-socialmedia" not "caper-socialnetwork"
+-- I'm still using the old tables for user info
 
 DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users(
@@ -30,4 +31,16 @@ CREATE TABLE chat_messages(
     message VARCHAR NOT NULL CHECK (message <> ''),
     sender_id INT NOT NULL REFERENCES users(id),
     ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE projects(
+  id SERIAL PRIMARY KEY,
+    owner VARCHAR(255) NOT NULL CHECK (owner !=''),
+    name VARCHAR(255) NOT NULL CHECK (name !=''),
+    banner VARCHAR(255),
+    banner_credit VARCHAR(255),
+    category VARCHAR(255),
+    summary VARCHAR (600),
+    primary_metric VARCHAR(255),
+    primary_metric_desc VARCHAR(255),
+    ts TIMESTAMP default CURRENT_TIMESTAMP
 );
