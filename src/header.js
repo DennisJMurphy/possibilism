@@ -7,12 +7,27 @@ export default function Header(props) {
     return (
         <nav id="header">
             <Logo />
-            <Link to="/users/"> Find People</Link>
-            <Link to="/friends"> Friends</Link>
-            <Link to="/chat">Chat</Link>
-            <Link to="/"> Profile</Link>
-            <Link to="/logout">Logout</Link>
-            <Link to="/delete">Delete Profile</Link>
+            <Link className="header-links" to="/users/">
+                {" "}
+                Find People
+            </Link>
+            <Link className="header-links" to="/friends">
+                {" "}
+                Friends
+            </Link>
+            <Link className="header-links" to="/projects">
+                Projects
+            </Link>
+            <Link className="header-links" to="/chat">
+                Chat
+            </Link>
+            <Link className="header-links" to="/">
+                {" "}
+                Profile
+            </Link>
+            <Link className="header-links" to="/logout">
+                Logout
+            </Link>
             <ProfilePic image={props.image} />
         </nav>
     );

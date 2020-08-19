@@ -9,6 +9,7 @@ import Friends from "./friends";
 import axios from "./axios";
 import Delete from "./delete";
 import Logout from "./logout";
+import Projects from "./project";
 import { BrowserRouter, Route } from "react-router-dom";
 import Chat from "./chat";
 export default class App extends React.Component {
@@ -82,6 +83,7 @@ export default class App extends React.Component {
                         <Route path="/users/" render={() => <FindPeople />} />
                         <Route path="/friends" render={() => <Friends />} />
                         <Route path="/chat" render={() => <Chat />} />
+                        <Route path="/projects" render={() => <Projects />} />
                         <Route path="/delete" render={() => <Delete />} />
                         <Route path="/logout" render={() => <Logout />} />
                         <Route

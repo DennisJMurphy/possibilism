@@ -134,12 +134,13 @@ module.exports.removeUser = (userId) => {
     return db.query(q, [userId]);
 };
 module.exports.addProjectInfo = (
+    owner,
     name,
     category,
     summary,
     primary_metric_desc
 ) => {
     let q =
-        "INSERT INTO projects (name, category, summary, primary_metric_desc) VALUES ($1,$2,$3,$4)";
-    return db.query(q, [name, category, summary, primary_metric_desc]);
+        "INSERT INTO projects (owner, name, category, summary, primary_metric_desc) VALUES ($1,$2,$3,$4,$5)";
+    return db.query(q, [owner, name, category, summary, primary_metric_desc]);
 };

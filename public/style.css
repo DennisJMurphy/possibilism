@@ -12,6 +12,10 @@
 #header img {
     height: 70px;
 }
+.header-links {
+    align-self: flex-end;
+    margin-bottom: 10px;
+}
 .profile img,
 .otherProfile img {
     height: 200px;
@@ -24,6 +28,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 .chat-window img {
     height: 50px;
@@ -46,4 +51,7 @@
 .names {
     margin-left: 10px;
     margin-right: 10px;
+}
+.footer-element {
+    align-self: flex-end;
 }

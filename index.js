@@ -226,7 +226,18 @@ app.post("/register", (req, res) => {
         });
 });
 app.post("/register-project", (req, res) => {
-    db.addProjectInfo(); // you were here
+    var userId = req.session.userId;
+    console.log("req body", req.body);
+    const { name, category, summary, primary_metric_desc } = req.body;
+    db.addProjectInfo(userId, name, category, summary, primary_metric_desc)
+        .then((result) => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("2err in post register project", err);
+            return;
+        });
 });
 app.get("/user", (req, res) => {
     var userId = req.session.userId;

@@ -4,10 +4,12 @@ import axios from "./axios";
 
 export default function Project_Registration() {
     const [projectInfo, setProjectInfo] = useState();
+    //setProjectInfo({});
     const handleChange = (e) => {
         setProjectInfo(e.target.value);
     };
     function click() {
+        console.log("project info from register", projectInfo);
         axios
             .post("/register-project", {
                 name: projectInfo.name,
