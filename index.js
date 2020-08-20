@@ -5,28 +5,30 @@ const server = require("http").Server(app); // raw node server for socket.io
 const io = require("socket.io")(server, { origins: "localhost:8080" }); // add heroku here if needed
 const db = require("./db"); // adding .js is optional
 const ses = require("./ses");
+let secrets;
+if (process.env.NODE_ENV == "production") {
+    secrets = process.env; // in prod the secrets are environment variables
+} else {
+    secrets = require("./secrets"); // in dev they are in secrets.json
+}
 const cookieSession = require("cookie-session");
 // new cookiesession middleware for io
 const cookieSessionMiddleware = cookieSession({
-    secret: `hamburgers with cheese`,
-    maxAge: 1000 * 60 * 60 * 24 * 14,
+    secret: secrets.secret,
+    maxAge: secrets.maxAge,
 });
+
 app.use(cookieSessionMiddleware);
 io.use(function (socket, next) {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
-// app.use( // redundant
-//     cookieSession({
-//         secret: `There is no need for alarm.`,
-//         maxAge: 1000 * 60 * 60 * 24 * 14,
-//     })
-// );
+
 const s3 = require("./s3");
 //const { s3Url } = require("./config");
 const { hash, compare } = require("./bc");
 app.use(express.static("public"));
 app.use(express.json());
-//app.use(express.urlencoded({extended: false,}));
+app.use(express.urlencoded({ extended: false }));
 app.use(compression());
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -243,7 +245,7 @@ app.get("/current-projects", (req, res) => {
     db.currentProjects()
         .then((data) => {
             const projects = data.rows;
-            console.log("projects", projects);
+            //console.log("projects", projects);
             res.json(projects);
         })
         .catch((err) => {

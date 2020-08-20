@@ -14,7 +14,7 @@ export default function ProjectSummaries() {
             }
         })();
     }, []);
-    console.log("projects in project summaries2", projects);
+    //console.log("projects in project summaries2", projects);
     return (
         <React.Fragment>
             <h1>Current Projects</h1>
