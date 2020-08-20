@@ -32,9 +32,10 @@ CREATE TABLE chat_messages(
     sender_id INT NOT NULL REFERENCES users(id),
     ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+DROP TABLE IF EXISTS projects CASCADE;
 CREATE TABLE projects(
   id SERIAL PRIMARY KEY,
-    owner VARCHAR(255) NOT NULL CHECK (owner !=''),
+    owner INTEGER,
     name VARCHAR(255) NOT NULL CHECK (name !=''),
     banner VARCHAR(255),
     banner_credit VARCHAR(255),

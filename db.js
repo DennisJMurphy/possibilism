@@ -144,3 +144,10 @@ module.exports.addProjectInfo = (
         "INSERT INTO projects (owner, name, category, summary, primary_metric_desc) VALUES ($1,$2,$3,$4,$5)";
     return db.query(q, [owner, name, category, summary, primary_metric_desc]);
 };
+module.exports.currentProjects = () => {
+    let q = `SELECT *
+            FROM projects
+            JOIN users
+            ON users.id = projects.owner`;
+    return db.query(q);
+};

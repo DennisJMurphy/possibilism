@@ -3,16 +3,28 @@ import axios from "./axios";
 //import { useDispatch, useSelector } from "react-redux";
 
 export default function Project_Registration() {
-    const [projectInfo, setProjectInfo] = useState();
+    const [projectInfo, setProjectInfo] = useState({
+        pName: "",
+        category: "",
+        summary: "",
+        primary_metric_desc: "",
+    });
     //setProjectInfo({});
     const handleChange = (e) => {
-        setProjectInfo(e.target.value);
+        const { name, value } = e.target;
+        // setProjectInfo((prevState) => {
+        //    ...prevState,
+        //     name: 'value',
+
+        // });
+
+        //setProjectInfo({ e.target.value });
     };
     function click() {
         console.log("project info from register", projectInfo);
         axios
             .post("/register-project", {
-                name: projectInfo.name,
+                pName: projectInfo.pName,
                 category: projectInfo.category,
                 summary: projectInfo.summary,
                 primary_metric_desc: projectInfo.primary_metric_desc,
@@ -33,7 +45,7 @@ export default function Project_Registration() {
             <div className="project-registration">
                 <input
                     onChange={(e) => handleChange(e)}
-                    name="name"
+                    name="projectname"
                     placeholder="Project Name"
                 />
                 <input

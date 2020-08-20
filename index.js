@@ -239,6 +239,19 @@ app.post("/register-project", (req, res) => {
             return;
         });
 });
+app.get("/current-projects", (req, res) => {
+    db.currentProjects()
+        .then((data) => {
+            const [projects] = data.rows;
+            console.log("projects", projects);
+            res.json([projects]);
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in get current projects", err);
+            return;
+        });
+});
 app.get("/user", (req, res) => {
     var userId = req.session.userId;
     db.userData(userId)
