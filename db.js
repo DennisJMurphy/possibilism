@@ -145,7 +145,7 @@ module.exports.addProjectInfo = (
     return db.query(q, [owner, name, category, summary, primary_metric_desc]);
 };
 module.exports.currentProjects = () => {
-    let q = `SELECT *
+    let q = `SELECT users.first, users.last, projects.name, projects.category, projects.summary, projects.primary_metric, projects.primary_metric_desc
             FROM projects
             JOIN users
             ON users.id = projects.owner`;

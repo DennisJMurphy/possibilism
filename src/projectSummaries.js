@@ -22,7 +22,10 @@ export default function ProjectSummaries() {
                 projects.map((project, id) => (
                     <div key={id}>
                         <p>{project.name}</p>
-                        <p>{project.owner}</p>
+                        <p>
+                            {project.first}
+                            {project.last}
+                        </p>
                         <p>{project.category}</p>
                         <p>{project.summary}</p>
                         <p>

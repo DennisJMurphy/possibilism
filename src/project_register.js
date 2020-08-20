@@ -12,11 +12,13 @@ export default function Project_Registration() {
     //setProjectInfo({});
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // setProjectInfo((prevState) => {
-        //    ...prevState,
-        //     name: 'value',
-
-        // });
+        // console.log("name value", name, value);
+        setProjectInfo((prevState) => {
+            return {
+                ...prevState,
+                [name]: value,
+            };
+        });
 
         //setProjectInfo({ e.target.value });
     };
@@ -33,6 +35,7 @@ export default function Project_Registration() {
                 console.log("data", data);
             });
     }
+    //console.log("project info", projectInfo);
     return (
         <React.Fragment>
             <h2>Please enter your project details.</h2>
@@ -45,7 +48,7 @@ export default function Project_Registration() {
             <div className="project-registration">
                 <input
                     onChange={(e) => handleChange(e)}
-                    name="projectname"
+                    name="pName"
                     placeholder="Project Name"
                 />
                 <input

@@ -228,8 +228,8 @@ app.post("/register", (req, res) => {
 app.post("/register-project", (req, res) => {
     var userId = req.session.userId;
     console.log("req body", req.body);
-    const { name, category, summary, primary_metric_desc } = req.body;
-    db.addProjectInfo(userId, name, category, summary, primary_metric_desc)
+    const { pName, category, summary, primary_metric_desc } = req.body;
+    db.addProjectInfo(userId, pName, category, summary, primary_metric_desc)
         .then((result) => {
             res.json({ success: true });
         })
@@ -242,9 +242,9 @@ app.post("/register-project", (req, res) => {
 app.get("/current-projects", (req, res) => {
     db.currentProjects()
         .then((data) => {
-            const [projects] = data.rows;
+            const projects = data.rows;
             console.log("projects", projects);
-            res.json([projects]);
+            res.json(projects);
         })
         .catch((err) => {
             res.json({ success: false });
