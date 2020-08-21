@@ -145,9 +145,14 @@ module.exports.addProjectInfo = (
     return db.query(q, [owner, name, category, summary, primary_metric_desc]);
 };
 module.exports.currentProjects = () => {
-    let q = `SELECT users.first, users.last, projects.name, projects.category, projects.summary, projects.primary_metric, projects.primary_metric_desc
+    let q = `SELECT users.first, users.last, projects.id, projects.name, projects.category, projects.summary, projects.primary_metric, projects.primary_metric_desc
             FROM projects
             JOIN users
             ON users.id = projects.owner`;
     return db.query(q);
+};
+module.exports.updateField = (project, data) => {
+    console.log("db items", project, data);
+    let q = "UPDATE projects SET primary_metric = $2 WHERE id = $1";
+    return db.query(q, [project, data]);
 };

@@ -41,7 +41,7 @@ CREATE TABLE projects(
     banner_credit VARCHAR(255),
     category VARCHAR(255),
     summary VARCHAR (600),
-    primary_metric VARCHAR(255),
+    primary_metric INTEGER,
     primary_metric_desc VARCHAR(255),
     ts TIMESTAMP default CURRENT_TIMESTAMP
 );

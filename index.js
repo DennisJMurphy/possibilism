@@ -244,13 +244,37 @@ app.post("/register-project", (req, res) => {
 app.get("/current-projects", (req, res) => {
     db.currentProjects()
         .then((data) => {
-            const projects = data.rows;
+            var projects = data.rows;
             //console.log("projects", projects);
             res.json(projects);
         })
         .catch((err) => {
             res.json({ success: false });
             console.log("err in get current projects", err);
+            return;
+        });
+});
+app.get("/cookie", (req, res) => {
+    var loggedIn = false;
+    if (req.session.userId) {
+        loggedIn = true;
+    }
+    console.log(loggedIn);
+    res.json({ loggedIn: loggedIn });
+});
+app.post("/update-metric", (req, res) => {
+    //come back here and pull the old value from the database and add it to the new value
+    var { project, value } = req.body;
+    //console.log("REQ", req.body);
+    //var update = old + value;
+    console.log("projectnumr, value", project, value);
+    db.updateField(project, value)
+        .then(() => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in post update field", err);
             return;
         });
 });
