@@ -153,6 +153,7 @@ module.exports.currentProjects = () => {
 };
 module.exports.updateField = (project, data) => {
     console.log("db items", project, data);
-    let q = "UPDATE projects SET primary_metric = $2 WHERE id = $1";
+    let q =
+        "UPDATE projects SET primary_metric = (primary_metric + $2) WHERE id = $1";
     return db.query(q, [project, data]);
 };

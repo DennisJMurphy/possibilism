@@ -267,10 +267,19 @@ app.post("/update-metric", (req, res) => {
     var { project, value } = req.body;
     //console.log("REQ", req.body);
     //var update = old + value;
-    console.log("projectnumr, value", project, value);
+    //console.log("projectnumr, value", project, value);
     db.updateField(project, value)
         .then(() => {
-            res.json({ success: true });
+            db.currentProjects()
+                .then((data) => {
+                    var projects = data.rows;
+                    res.json(projects);
+                })
+                .catch((err) => {
+                    res.json({ success: false });
+                    console.log("err in get current projects", err);
+                    return;
+                });
         })
         .catch((err) => {
             res.json({ success: false });

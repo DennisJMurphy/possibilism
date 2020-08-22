@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "./axios";
 
 export default function ProjectSummaries() {
     const [projects, setProjects] = useState([]);
     const [loggedIn, setLoggedIn] = useState();
     const [update, setUpdate] = useState();
-
+    let entryField = useRef();
     const handleChange = (e) => {
         const { value } = e.target;
-        // console.log("name value", name, value);
-        // setUpdate((prevState) => {
-        //     return {
-        //         ...prevState,
-        //         [name]: value,
-        //     };
-        // });
         setUpdate(value);
     };
     function submit(id) {
-        console.log("id, update", id, update);
+        //console.log("id, update", id, update);
         axios
             .post("/update-metric", {
                 project: id,
@@ -26,7 +19,11 @@ export default function ProjectSummaries() {
                 //old: old,
             })
             .then(({ data }) => {
-                console.log("data", data);
+                setProjects(data);
+                console.log("entryfield", entryField);
+                //console.log("data", data);
+
+                return;
             });
     }
     useEffect(() => {
@@ -55,7 +52,6 @@ export default function ProjectSummaries() {
                 projects.map((project, id) => (
                     <div key={id} className="dashboard">
                         <h2>{project.name}</h2>
-                        <p>this is project number: {project.id}</p>
                         <p>
                             Status: {project.primary_metric}{" "}
                             {project.primary_metric_desc}!
@@ -68,6 +64,7 @@ export default function ProjectSummaries() {
                                         name="metric"
                                         placeholder="Enter Update Here"
                                         type="integer"
+                                        ref={entryField}
                                     />
                                     <button onClick={(e) => submit(project.id)}>
                                         update
