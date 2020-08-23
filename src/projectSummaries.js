@@ -11,6 +11,7 @@ export default function ProjectSummaries() {
         setUpdate(value);
     };
     function submit(id) {
+        entryField.current.value = "";
         //console.log("id, update", id, update);
         axios
             .post("/update-metric", {
@@ -19,8 +20,10 @@ export default function ProjectSummaries() {
                 //old: old,
             })
             .then(({ data }) => {
+                //entryField.current.value = "";
                 setProjects(data);
-                console.log("entryfield", entryField);
+
+                //console.log("entryfield", entryField);
                 //console.log("data", data);
 
                 return;

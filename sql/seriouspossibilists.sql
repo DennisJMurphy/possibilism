@@ -45,3 +45,10 @@ CREATE TABLE projects(
     primary_metric_desc VARCHAR(255),
     ts TIMESTAMP default CURRENT_TIMESTAMP
 );
+CREATE TABLE updates(
+  id SERIAL PRIMARY KEY,
+    user_id INTEGER,
+    project_id INTEGER,
+    amount INTEGER,
+    ts TIMESTAMP default CURRENT_TIMESTAMP
+);

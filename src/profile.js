@@ -1,6 +1,7 @@
 import React from "react";
 import ProfilePic from "./profilepic";
 import BioEditor from "./bio";
+import Stats from "./stats.js";
 import { Link } from "react-router-dom";
 export default function Profile(props) {
     //console.log("props in profile", props);
@@ -15,6 +16,8 @@ export default function Profile(props) {
                 image={props.image}
             />
             <BioEditor bio={props.bio} setBio={props.setBio} />
+            <Stats />
+
             <div className="footer-element">
                 <p>
                     Remember, you can always leave this community and delete all

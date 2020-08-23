@@ -265,25 +265,40 @@ app.get("/cookie", (req, res) => {
 app.post("/update-metric", (req, res) => {
     //come back here and pull the old value from the database and add it to the new value
     var { project, value } = req.body;
+    var userId = req.session.userId;
     //console.log("REQ", req.body);
-    //var update = old + value;
     //console.log("projectnumr, value", project, value);
-    db.updateField(project, value)
-        .then(() => {
-            db.currentProjects()
-                .then((data) => {
-                    var projects = data.rows;
-                    res.json(projects);
-                })
-                .catch((err) => {
-                    res.json({ success: false });
-                    console.log("err in get current projects", err);
-                    return;
-                });
+    db.trackUsers(userId, project, value).then(() => {
+        db.updateField(project, value)
+            .then(() => {
+                db.currentProjects()
+                    .then((data) => {
+                        var projects = data.rows;
+                        res.json(projects);
+                    })
+                    .catch((err) => {
+                        res.json({ success: false });
+                        console.log("err in get current projects", err);
+                        return;
+                    });
+            })
+            .catch((err) => {
+                res.json({ success: false });
+                console.log("err in post update field", err);
+                return;
+            });
+    });
+});
+app.get("/user-updates", (req, res) => {
+    var userId = req.session.userId;
+    db.userStats(userId)
+        .then((data) => {
+            console.log("data.rows", data.rows);
+            res.json(data.rows);
         })
         .catch((err) => {
             res.json({ success: false });
-            console.log("err in post update field", err);
+            console.log("err in get user-updates", err);
             return;
         });
 });
@@ -549,13 +564,13 @@ server.listen(8080, function () {
 });
 // changed the above from app.listen to server.listen for io.session
 io.on("connection", async (socket) => {
-    console.log(`socket wih the id ${socket.id} is now connected`);
+    //console.log(`socket wih the id ${socket.id} is now connected`);
     //console.log("socket.request.session", socket.request.session);
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
     socket.on("disconnect", function () {
-        console.log(`socket wih the id ${socket.id} is now disconnected`);
+        //console.log(`socket wih the id ${socket.id} is now disconnected`);
     });
     const userId = socket.request.session.userId;
     // // if (!userId) {

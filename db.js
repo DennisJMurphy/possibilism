@@ -138,11 +138,19 @@ module.exports.addProjectInfo = (
     name,
     category,
     summary,
+    primary_metric,
     primary_metric_desc
 ) => {
     let q =
-        "INSERT INTO projects (owner, name, category, summary, primary_metric_desc) VALUES ($1,$2,$3,$4,$5)";
-    return db.query(q, [owner, name, category, summary, primary_metric_desc]);
+        "INSERT INTO projects (owner, name, category, summary, primary_metric, primary_metric_desc) VALUES ($1,$2,$3,$4,$5,$6)";
+    return db.query(q, [
+        owner,
+        name,
+        category,
+        summary,
+        primary_metric,
+        primary_metric_desc,
+    ]);
 };
 module.exports.currentProjects = () => {
     let q = `SELECT users.first, users.last, projects.id, projects.name, projects.category, projects.summary, projects.primary_metric, projects.primary_metric_desc
@@ -156,4 +164,17 @@ module.exports.updateField = (project, data) => {
     let q =
         "UPDATE projects SET primary_metric = (primary_metric + $2) WHERE id = $1";
     return db.query(q, [project, data]);
+};
+module.exports.trackUsers = (user, project, amount) => {
+    let q =
+        "INSERT INTO updates (user_id, project_id, amount) VALUES ($1,$2,$3)";
+    return db.query(q, [user, project, amount]);
+};
+module.exports.userStats = (user) => {
+    let q = `SELECT updates.amount, updates.ts, projects.name, projects.primary_metric_desc
+    FROM updates
+    JOIN projects
+    ON updates.project_id = projects.id 
+    WHERE user_id = $1`;
+    return db.query(q, [user]);
 };

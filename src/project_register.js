@@ -29,6 +29,7 @@ export default function Project_Registration() {
                 pName: projectInfo.pName,
                 category: projectInfo.category,
                 summary: projectInfo.summary,
+                primary_metric: 0,
                 primary_metric_desc: projectInfo.primary_metric_desc,
             })
             .then(({ data }) => {
