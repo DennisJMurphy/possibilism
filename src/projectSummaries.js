@@ -51,39 +51,44 @@ export default function ProjectSummaries() {
     return (
         <React.Fragment>
             <h1>Project Dashboard</h1>
-            {projects &&
-                projects.map((project, id) => (
-                    <div key={id} className="dashboard">
-                        <h2>{project.name}</h2>
-                        <p>
-                            Status: {project.primary_metric}{" "}
-                            {project.primary_metric_desc}!
-                        </p>
-                        <div>
-                            {loggedIn && (
-                                <div>
-                                    <input
-                                        onChange={(e) => handleChange(e)}
-                                        name="metric"
-                                        placeholder="Enter Update Here"
-                                        type="integer"
-                                        ref={entryField}
-                                    />
-                                    <button onClick={(e) => submit(project.id)}>
-                                        update
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                        <p>{project.category}</p>
+            <div className="dashboard">
+                {projects &&
+                    projects.map((project, id) => (
+                        <div key={id} className="projects">
+                            <h2>{project.name}</h2>
+                            <p>
+                                Status: {project.primary_metric}{" "}
+                                {project.primary_metric_desc}!
+                            </p>
+                            <div>
+                                {loggedIn && (
+                                    <div>
+                                        <input
+                                            onChange={(e) => handleChange(e)}
+                                            name="metric"
+                                            placeholder="Enter Update Here"
+                                            type="integer"
+                                            ref={entryField}
+                                        />
+                                        <button
+                                            onClick={(e) => submit(project.id)}
+                                        >
+                                            update
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                            <p>{project.category}</p>
 
-                        <p>
-                            Project submitted by: {project.first} {project.last}
-                        </p>
-                        <p>{project.summary}</p>
-                        <p>{project.resources}</p>
-                    </div>
-                ))}
+                            <p>
+                                Project submitted by: {project.first}{" "}
+                                {project.last}
+                            </p>
+                            <p>{project.summary}</p>
+                            <p>{project.resources}</p>
+                        </div>
+                    ))}
+            </div>
         </React.Fragment>
     );
 }

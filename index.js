@@ -274,13 +274,16 @@ app.get("/cookie", (req, res) => {
     if (req.session.userId) {
         loggedIn = true;
     }
-    console.log(loggedIn);
+    //console.log(loggedIn);
     res.json({ loggedIn: loggedIn });
 });
 app.post("/update-metric", (req, res) => {
     //come back here and pull the old value from the database and add it to the new value
     var { project, value } = req.body;
     var userId = req.session.userId;
+    if (Number.isNaN(value)) {
+        return;
+    }
     //console.log("REQ", req.body);
     //console.log("projectnumr, value", project, value);
     db.trackUsers(userId, project, value).then(() => {
@@ -308,7 +311,20 @@ app.get("/user-updates", (req, res) => {
     var userId = req.session.userId;
     db.userStats(userId)
         .then((data) => {
-            console.log("data.rows", data.rows);
+            //console.log("data.rows", data.rows);
+            res.json(data.rows);
+        })
+        .catch((err) => {
+            res.json({ success: false });
+            console.log("err in get user-updates", err);
+            return;
+        });
+});
+app.get("/user-projects", (req, res) => {
+    var userId = req.session.userId;
+    db.userProjects(userId)
+        .then((data) => {
+            //console.log("data.rows user projects", data.rows);
             res.json(data.rows);
         })
         .catch((err) => {
@@ -574,7 +590,7 @@ app.get("*", function (req, res) {
     }
 });
 
-server.listen(8080, function () {
+server.listen(process.env.PORT || 8080, function () {
     console.log("I'm listening.");
 });
 // changed the above from app.listen to server.listen for io.session

@@ -180,3 +180,7 @@ module.exports.userStats = (user) => {
     WHERE user_id = $1`;
     return db.query(q, [user]);
 };
+module.exports.userProjects = (userId) => {
+    let q = "SELECT * FROM projects WHERE owner = $1";
+    return db.query(q, [userId]);
+};

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "./axios";
-export default function Stats() {
+export default function ProjectEditor() {
     const [stats, setStats] = useState([]);
-    const [projects, setProjects] = useState([]);
     useEffect(() => {
         (async () => {
             try {
@@ -11,35 +10,26 @@ export default function Stats() {
             } catch (err) {
                 console.log("axios error get user updates", err);
             }
-            try {
-                const { data2 } = await axios.get("/user-projects");
-                setProjects(data2);
-            } catch (err) {
-                console.log("axios error get user projects", err);
-            }
         })();
     }, []);
-    //console.log("projects", projects);
+    //console.log("stats", stats);
     return (
         <React.Fragment>
             <h1>Participation</h1>
-            {projects &&
-                projects.map((project, ts) => (
-                    <div key={project.ts} className="personal-stats">
-                        <p>
-                            {project.name} : {project.category}
-                        </p>
-                    </div>
-                ))}
             {stats &&
                 stats.map((stat, ts) => (
                     <div key={stat.ts} className="personal-stats">
                         <p>
-                            {stat.name} : {stat.amount}{" "}
-                            {stat.primary_metric_desc}! Timestamp: {stat.ts}
+                            {stat.name} {stat.ts}: {stat.amount}{" "}
+                            {stat.primary_metric_desc}!
                         </p>
 
                         <p>{stat.category}</p>
+
+                        {/* <p>
+                            Project submitted by: {project.first} {project.last}
+                        </p>
+                        <p>{project.summary}</p>  */}
                     </div>
                 ))}
         </React.Fragment>

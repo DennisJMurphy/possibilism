@@ -9,9 +9,14 @@
     border-right: white;
     border-left: white;
 }
-
+#welcome-logo {
+    height: 200px;
+    margin-left: 60px;
+}
 #header img {
     height: 70px;
+}
+#welcome {
 }
 .header-links {
     align-self: flex-end;
@@ -55,11 +60,24 @@
 }
 .footer-element {
     align-self: flex-end;
+    border-top-style: solid;
+    border-top-width: 2px;
+    border-top-color: blueviolet;
+}
+.dashboard p {
+    margin: 5px;
 }
 .dashboard {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.projects {
+    background-color: khaki;
+    padding: 10px;
     border-style: dotted;
     border-width: 2px;
     border-color: tomato;
+    max-width: 250px;
+    margin: 5px;
 }

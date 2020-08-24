@@ -59,10 +59,10 @@ class BioEditor extends React.Component {
             return (
                 <>
                     <h1>User Bio</h1>
+                    <p>{this.props.bio}</p>
                     <button onClick={() => this.toggleEdit()}>
                         {buttonTextNow}
                     </button>
-                    <p>{this.props.bio}</p>
                 </>
             );
         } else if (this.state.editMode === true) {
