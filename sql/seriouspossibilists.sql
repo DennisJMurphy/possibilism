@@ -43,6 +43,7 @@ CREATE TABLE projects(
     summary VARCHAR (600),
     primary_metric INTEGER,
     primary_metric_desc VARCHAR(255),
+    resources VARCHAR,
     ts TIMESTAMP default CURRENT_TIMESTAMP
 );
 CREATE TABLE updates(

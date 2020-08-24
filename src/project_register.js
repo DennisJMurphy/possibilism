@@ -31,6 +31,7 @@ export default function Project_Registration() {
                 summary: projectInfo.summary,
                 primary_metric: 0,
                 primary_metric_desc: projectInfo.primary_metric_desc,
+                resources: projectInfo.resources,
             })
             .then(({ data }) => {
                 console.log("data", data);
@@ -66,6 +67,11 @@ export default function Project_Registration() {
                     onChange={(e) => handleChange(e)}
                     name="primary_metric_desc"
                     placeholder="Primary Success Metric"
+                />
+                <input
+                    onChange={(e) => handleChange(e)}
+                    name="resources"
+                    placeholder="Tips and Tricks"
                 />
                 <button onClick={(e) => click()}>Register Project</button>
             </div>

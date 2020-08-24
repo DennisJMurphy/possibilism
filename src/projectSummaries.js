@@ -81,6 +81,7 @@ export default function ProjectSummaries() {
                             Project submitted by: {project.first} {project.last}
                         </p>
                         <p>{project.summary}</p>
+                        <p>{project.resources}</p>
                     </div>
                 ))}
         </React.Fragment>

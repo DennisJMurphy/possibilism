@@ -229,9 +229,24 @@ app.post("/register", (req, res) => {
 });
 app.post("/register-project", (req, res) => {
     var userId = req.session.userId;
-    console.log("req body", req.body);
-    const { pName, category, summary, primary_metric_desc } = req.body;
-    db.addProjectInfo(userId, pName, category, summary, primary_metric_desc)
+    //console.log("req body", req.body);
+    const {
+        pName,
+        category,
+        summary,
+        primary_metric,
+        primary_metric_desc,
+        resources,
+    } = req.body;
+    db.addProjectInfo(
+        userId,
+        pName,
+        category,
+        summary,
+        primary_metric,
+        primary_metric_desc,
+        resources
+    )
         .then((result) => {
             res.json({ success: true });
         })
@@ -368,7 +383,7 @@ app.get("/newUsers", (req, res) => {
 app.get("/search/:userInput", (req, res) => {
     //console.log("req body userinput", req);
     if (req.params.userInput == " ") {
-        console.log("aha, you didnt crash");
+        //console.log("aha, you didnt crash");
         return res.json({});
     }
     db.searchUsers(req.params.userInput)
