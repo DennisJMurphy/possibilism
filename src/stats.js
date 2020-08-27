@@ -20,6 +20,7 @@ export default function Stats() {
         })();
     }, []);
     //console.log("projects", projects);
+    // projects are still not showing up, start here
     return (
         <React.Fragment>
             <h1>Participation</h1>
