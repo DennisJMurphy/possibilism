@@ -311,7 +311,7 @@ app.get("/user-updates", (req, res) => {
     var userId = req.session.userId;
     db.userStats(userId)
         .then((data) => {
-            //console.log("data.rows", data.rows);
+            // console.log("user updates data.rows", data.rows);
             res.json(data.rows);
         })
         .catch((err) => {
@@ -329,7 +329,7 @@ app.get("/user-projects", (req, res) => {
         })
         .catch((err) => {
             res.json({ success: false });
-            console.log("err in get user-updates", err);
+            console.log("err in get user-projects", err);
             return;
         });
 });
