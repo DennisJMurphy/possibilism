@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "./axios";
 import FriendButton from "./friendButton";
+import Stats from "./stats";
+import RegisteredProjects from "./registeredProjects";
 
 export default class OtherProfile extends React.Component {
     constructor(props) {
@@ -27,14 +29,18 @@ export default class OtherProfile extends React.Component {
     }
     render() {
         return (
-            <div className="profile">
-                <h1>
-                    {this.state.first} {this.state.last}
-                </h1>
-                <img src={this.state.profile_pic} />
-                <p>{this.state.bio}</p>
-                <FriendButton otherId={this.state.id} />
-            </div>
+            <React.Fragment>
+                <div className="profile">
+                    <h1>
+                        {this.state.first} {this.state.last}
+                    </h1>
+                    <img src={this.state.profile_pic} />
+                    <p>{this.state.bio}</p>
+                    <FriendButton otherId={this.state.id} />
+                </div>
+                <RegisteredProjects />
+                <Stats />
+            </React.Fragment>
         );
     }
 }

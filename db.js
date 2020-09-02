@@ -158,13 +158,14 @@ module.exports.currentProjects = () => {
     let q = `SELECT users.first, users.last, projects.id, projects.name, projects.category, projects.summary, projects.primary_metric, projects.primary_metric_desc, projects.resources
             FROM projects
             JOIN users
-            ON users.id = projects.owner`;
+            ON users.id = projects.owner
+            ORDER BY projects.id`;
     return db.query(q);
 };
 module.exports.updateField = (project, data) => {
     //console.log("db items", project, data);
     let q =
-        "UPDATE projects SET primary_metric = (primary_metric + $2) WHERE id = $1";
+        "UPDATE projects SET primary_metric = (COALESCE(primary_metric,0) + COALESCE($2,0)) WHERE id = $1";
     return db.query(q, [project, data]);
 };
 module.exports.trackUsers = (user, project, amount) => {
