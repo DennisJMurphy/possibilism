@@ -13,8 +13,7 @@ export default function RegisteredProjects() {
             }
         })();
     }, []);
-    //console.log("projects", projects);
-    // projects are still not showing up, start here
+
     return (
         <React.Fragment>
             <h4>Submitted Projects:</h4>
