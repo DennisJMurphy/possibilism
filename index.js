@@ -591,7 +591,7 @@ app.get("*", function (req, res) {
 });
 
 server.listen(process.env.PORT || 8080, function () {
-    console.log("I'm listening.");
+    console.log("Server is listening");
 });
 // changed the above from app.listen to server.listen for io.session
 io.on("connection", async (socket) => {
