@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const server = require("http").Server(app); // raw node server for socket.io
-const io = require("socket.io")(server, { origins: "localhost:8080" }); // add heroku here if needed
+const io = require("socket.io")(server, {
+    origins: "localhost:8080 serious-possibilists.herokuapp.com:*",
+}); // add heroku here if needed
 const db = require("./db"); // adding .js is optional
 const ses = require("./ses");
 let secrets;
