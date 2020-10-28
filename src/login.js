@@ -19,7 +19,7 @@ export default class Login extends React.Component {
                 password: this.state.password,
             })
             .then(({ data }) => {
-                console.log("data", data.success, data);
+                //console.log("data", data.success, data);
                 if (data.success) {
                     this.setState({
                         error: false,

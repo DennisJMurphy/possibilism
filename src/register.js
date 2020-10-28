@@ -21,7 +21,7 @@ export default class Registration extends React.Component {
                 guard: this.state.guard,
             })
             .then(({ data }) => {
-                console.log("data", data.success, data);
+                //console.log("data", data.success, data);
                 if (data.success) {
                     this.setState({
                         error: false,
