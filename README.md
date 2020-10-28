@@ -19,7 +19,7 @@ https://serious-possibilists.herokuapp.com/
 
 ### Main Features
 
--   Registration, login, reset password (limited functionality until I get wider SES priveleges)
+-   Registration, login, reset password (limited functionality until I get wider SES privileges)
 -   Profile blurb, picture, with projects and contributions
 -   Project Registration, with name, category, metric, and recommended resources
 -   People search and friend function
