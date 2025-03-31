@@ -1,4 +1,22 @@
-# Welcome to your Expo app 👋
+# Possibilism
+
+A work-in-progress React Native app that helps folks track good deeds, share in their achievements, and get some good feelings from it. 
+
+## Tech Stack
+- React Native (Expo)
+- Supabase 
+- Typescript
+
+## Why I'm building this
+Inspired in part by the late Hans Rosling and gapminder
+Empowerment through data
+
+## Status
+Database setup, Auth
+Much to do
+
+
+
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
