@@ -34,15 +34,19 @@ export default function GroupDetailScreen() {
   if (loading) return <Text>Loading group...</Text>
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
+    <View style={{ flex: 1, padding: 50 }}>
       <Text style={{ fontSize: 20, marginBottom: 12 }}>{group?.name}</Text>
-
+    {metrics.length === 0 ? (
+        <Text>No metrics available for this group.</Text>
+      ) : (
+        <Text style={{ fontSize: 16, marginBottom: 12 }}>Metrics:</Text>
+      )}
       <FlatList
         data={metrics}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-           // onPress={() => router.push(`/entry/${item.id}`)}
+           onPress={() => router.push(`/entry/${item.id}`)}
             style={{
               padding: 12,
               borderWidth: 1,
