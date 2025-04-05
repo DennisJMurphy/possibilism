@@ -36,6 +36,7 @@ export default function GroupDetailScreen() {
   return (
     <View style={{ flex: 1, padding: 50 }}>
       <Text style={{ fontSize: 20, marginBottom: 12 }}>{group?.name}</Text>
+      <Text style={{ fontSize: 14, marginBottom: 12 }}>{group?.description}</Text>
     {metrics.length === 0 ? (
         <Text>No metrics available for this group.</Text>
       ) : (
