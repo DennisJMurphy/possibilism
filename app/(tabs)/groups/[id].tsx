@@ -9,29 +9,57 @@ export default function GroupDetailScreen() {
   const [group, setGroup] = useState<any>(null)
   const [metrics, setMetrics] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [entries, setEntries] = useState<any[]>([])
 
   useEffect(() => {
-    const fetchGroupAndMetrics = async () => {
+    const fetchGroup = async () => {
       const { data: groupData } = await supabase
         .from('groups')
         .select('*')
         .eq('id', id)
         .single()
 
-      const { data: metricsData } = await supabase
-        .from('metrics')
-        .select('*')
-        .eq('group_id', id)
-
       setGroup(groupData)
-      setMetrics(metricsData || [])
       setLoading(false)
     }
 
-    fetchGroupAndMetrics()
+    fetchGroup()
   }, [id])
 
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      const { data: metricsData } = await supabase
+        .from('metrics')
+        .select('*')
+        .eq('group_id', group?.id)
+
+      setMetrics(metricsData || [])
+    }
+
+    fetchMetrics()
+  }, [group?.id])
+
+  useEffect(() => {
+    const fetchEntries = async () => {
+      if (!metrics.length) return
+      const { data: entriesData } = await supabase
+        .from('entries')
+        .select('amount')
+        .eq('metric_id', metrics[0]?.id)
+      setEntries(entriesData || [])
+    }
+console.log("entries", entries)
+    fetchEntries()
+  }, [metrics])
+
+
   if (loading) return <Text>Loading group...</Text>
+  if (!group) return <Text>Group not found</Text>
+  let entryTotal = 0
+  if (entries.length > 0) {
+    entryTotal = entries.reduce((total, entry) => total + entry.amount, 0)
+  }
+  console.log("entryTotal", entryTotal)
 
   return (
     <View style={{ flex: 1, padding: 50 }}>
@@ -57,9 +85,14 @@ export default function GroupDetailScreen() {
           >
             <Text style={{ fontSize: 16 }}>{item.name}</Text>
             <Text style={{ color: 'gray' }}>Unit: {item.unit}</Text>
+
+          {entries.length>0? (<Text style={{ fontSize: 16, marginTop: 20 }}>
+            Total {metrics[0].name} achieved: {entryTotal}
+                </Text>): <Text style={{ fontSize: 16, marginBottom: 12 }}>tracking unavailable</Text>}
           </TouchableOpacity>
         )}
       />
+  
     </View>
   )
 }
