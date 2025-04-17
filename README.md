@@ -2,6 +2,8 @@
 
 A work-in-progress React Native app that helps folks track good deeds, share in their achievements, and get some good feelings from it. 
 
+This is a reboot of the Serious Possibilists SPA that I built as part of my bootcamp training at the Spiced Academy in Berlin.
+
 ## Tech Stack
 - React Native (Expo)
 - Supabase 
@@ -12,8 +14,7 @@ The name was inspired in part by the late Hans Rosling and gapminder.
 Empowerment through data. 
 
 ## Status
-Database setup, Auth
-Much to do
+Initial screens roughed in
 
 
 _____________original RN Readme____________

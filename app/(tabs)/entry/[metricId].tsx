@@ -55,7 +55,7 @@ export default function EntryFormScreen() {
   }
 
   return (
-    <View style={{ padding: 16 }}>
+    <View style={{ padding: 50 }}>
       <Text style={{ fontSize: 18, marginBottom: 12 }}>
         Log your {metric.name} ({metric.unit})
       </Text>
