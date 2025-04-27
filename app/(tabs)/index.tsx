@@ -43,7 +43,7 @@ export default function DashboardScreen() {
       )}
       ListFooterComponent={
       <TouchableOpacity
-        onPress={() => router.push('/create-group')}
+        onPress={() => router.push('/groups')}
         style={{
           marginTop: 20,
           padding: 12,
