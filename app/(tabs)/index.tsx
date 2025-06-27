@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { supabase } from '../../lib/supabase'
 import { router } from 'expo-router'
+import { fetchUserGroups, getUser, getMetricsData } from '../../lib/queries'
 
 export default function DashboardScreen() {
   const [groups, setGroups] = useState<any[]>([])
@@ -11,30 +11,18 @@ export default function DashboardScreen() {
 
   useEffect(() => {
     const fetchGroupsAndMetrics = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      const { data, error } = await supabase
-        .from('group_memberships')
-        .select('group_id, groups ( id, name )')
-        .eq('user_id', user?.id)
+      const user  = await getUser()
+      const userGroupData = await fetchUserGroups(user)
+      const fetchMetricsData = await getMetricsData(userGroupData.map(g => g.group_id))
+      setMetrics(fetchMetricsData)
       
-      const groupIds = data?.map(g => g.group_id)
+      const groupIds = userGroupData?.map(g => g.group_id)
       if (!groupIds || groupIds.length === 0) {
         setLoading(false)
         return
       }
-      const { data: metricsData, error: metricsError } = await supabase
-        .from('metrics')
-        .select('id, name, unit, group_id')
-        .in('group_id', groupIds)
-
-      if (error) console.error(error)
-      else setGroups(data.map(g => g.groups))
-      if (metricsError) console.error(metricsError)
-      else setMetrics(metricsData)
-
-      setLoading(false)
+        setLoading(false)
     }
-
     fetchGroupsAndMetrics()
   }, [])
  
