@@ -85,7 +85,7 @@ export default function GroupDetailScreen() {
             <Text style={{ color: 'gray' }}>Unit: {item.unit}</Text>
 
           {entries.length>0? (<Text style={{ fontSize: 16, marginTop: 20 }}>
-            Total {metrics[0].name} achieved: {entryTotal}
+            Total {metrics[0].name}: {entryTotal}
                 </Text>): <Text style={{ fontSize: 16, marginBottom: 12 }}>tracking unavailable</Text>}
           </TouchableOpacity>
         )}

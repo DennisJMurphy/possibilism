@@ -15,6 +15,10 @@ export default function DashboardScreen() {
       const userGroupData = await fetchUserGroups(user)
       const fetchMetricsData = await getMetricsData(userGroupData.map(g => g.group_id))
       setMetrics(fetchMetricsData)
+      setGroups(userGroupData.map(g => ({
+        ...g.groups,
+        metric: fetchMetricsData.find(m => m.group_id === g.group_id)
+      })))
       
       const groupIds = userGroupData?.map(g => g.group_id)
       if (!groupIds || groupIds.length === 0) {
