@@ -23,7 +23,7 @@ export async function fetchUserGroups(user: { id: any } | null) {
   return data || []
 }
 
-export async function getMetricsData(groupIds: string[]) {
+export async function getMetricsLabels(groupIds: string[]) {
   const { data, error } = await supabase
     .from('metrics')
     .select('id, name, unit, group_id')
@@ -37,3 +37,16 @@ export async function getMetricsData(groupIds: string[]) {
   return data || []
 }
 
+export async function fetchAllEntries (metricIds: string[]) {
+  const { data, error } = await supabase
+    .from('entries')
+    .select('amount, user_id')
+    .eq('metric_id', metricIds)
+
+  if (error) {
+    console.error('Error fetching entries:', error)
+    return []
+  }
+
+  return data || []
+}

@@ -1,3 +1,6 @@
+1.0.3 (2025-07-01)
+ - updated dashboard to be actionable and complete
+ 
 1.0.2 (2025-04-27)
  - added group browse screen, wip
  - updated dependencies
