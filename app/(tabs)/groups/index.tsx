@@ -44,18 +44,7 @@ export default function BrowseGroupsScreen() {
           </TouchableOpacity>
         )}
       />
-       <Text style={{ fontSize: 20, marginBottom: 10 }}>dashboard Groups</Text>
 
-<FlatList
-  data={groups}
-  keyExtractor={(item) => item.id}
-   renderItem={({ item }) => (
-    <TouchableOpacity onPress={() => router.push(`/group/${item.id}`)}>
-      <View style={{ padding: 12, borderWidth: 1, marginBottom: 8, borderRadius: 8 }}>
-        <Text style={{ fontSize: 16 }}>{item.name}</Text>
-      </View>
-    </TouchableOpacity>
-)}
 ListFooterComponent={
 <TouchableOpacity
   onPress={() => router.push('/create-group')}
@@ -68,7 +57,7 @@ ListFooterComponent={
 >
   <Text style={{ color: 'white', textAlign: 'center' }}>+ Create New Group</Text>
 </TouchableOpacity>
-}></FlatList>
+}
     </View>
   )
 }

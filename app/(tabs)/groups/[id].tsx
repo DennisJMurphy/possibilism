@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { supabase } from '../../../lib/supabase'
 import { router } from 'expo-router'
+import { checkIfTrackingGroup, getUser, startTrackingGroup, stopTrackingGroup } from '@/lib/queries'
+import { Button } from 'react-native-elements'
 
 export default function GroupDetailScreen() {
   const { id } = useLocalSearchParams() 
@@ -10,6 +12,8 @@ export default function GroupDetailScreen() {
   const [metrics, setMetrics] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [entries, setEntries] = useState<any[]>([])
+  const [isTracking, setIsTracking] = useState(false)
+  const [userId, setUserId] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchGroup = async () => {
@@ -37,6 +41,25 @@ export default function GroupDetailScreen() {
     }
 
     fetchMetrics()
+    
+  }, [group?.id])
+
+  useEffect(() => {
+    const checkIfTracking = async () => {
+      const user = await getUser()
+      setUserId(user?.id || null)
+
+      if (!group?.id) return
+      if (!user?.id) {
+        setIsTracking(false)
+        return
+      }
+
+      const isTracking = await checkIfTrackingGroup(group.id, user?.id)
+      setIsTracking(isTracking)    
+    }
+    checkIfTracking()
+    
   }, [group?.id])
 
   useEffect(() => {
@@ -60,7 +83,7 @@ export default function GroupDetailScreen() {
   }
 
   return (
-    <View style={{ flex: 1, padding: 50 }}>
+    <View style={{ flex: 1, padding: 100 }}>
       <Text style={{ fontSize: 20, marginBottom: 12 }}>{group?.name}</Text>
       <Text style={{ fontSize: 14, marginBottom: 12 }}>{group?.description}</Text>
     {metrics.length === 0 ? (
@@ -90,6 +113,21 @@ export default function GroupDetailScreen() {
           </TouchableOpacity>
         )}
       />
+    <Button
+  title={isTracking ? "Stop Tracking Group" : "Track Group"}
+  onPress={async () => {
+    if (!userId || !group?.id) return
+    if (isTracking) {
+      // Remove tracking
+      await stopTrackingGroup(group.id, userId)
+      setIsTracking(false)
+    } else {
+      // Add tracking
+      await startTrackingGroup(group.id, userId)
+      setIsTracking(true)
+    }
+  }}
+/>
   
     </View>
   )

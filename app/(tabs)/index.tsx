@@ -83,7 +83,7 @@ export default function DashboardScreen() {
           borderRadius: 8,
         }}
       >
-        <Text style={{ color: 'white', textAlign: 'center' }}>+ Join or Create Group</Text>
+        <Text style={{ color: 'white', textAlign: 'center' }}>+ Browse Groups</Text>
       </TouchableOpacity>
       }></FlatList>
     </View>

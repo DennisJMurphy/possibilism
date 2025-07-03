@@ -1,3 +1,6 @@
+## [2025-07-03]
+- started adding a "track group" button, wip
+- changed and cleaned up some labels
 
 ## [2025-07-02]
 
