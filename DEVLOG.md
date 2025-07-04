@@ -1,3 +1,7 @@
+## [2025-07-04]
+- debugging in progress, dashboard is not refreshing as expected
+- "track" and "stop tracking" appear to be working correctly
+
 ## [2025-07-03]
 - started adding a "track group" button, wip
 - changed and cleaned up some labels

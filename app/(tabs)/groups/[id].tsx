@@ -60,7 +60,7 @@ export default function GroupDetailScreen() {
     }
     checkIfTracking()
     
-  }, [group?.id])
+  }, [group?.id, userId])
 
   useEffect(() => {
     const fetchEntries = async () => {

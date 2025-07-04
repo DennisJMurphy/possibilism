@@ -57,7 +57,7 @@ export async function checkIfTrackingGroup(groupId: string, userId: string) {
     }
     const { data, error } = await supabase
         .from('group_memberships')
-        .select('id')
+        .select('*')
         .eq('user_id', userId)
         .eq('group_id', groupId)
         .single()
@@ -79,6 +79,7 @@ export async function checkIfTrackingGroup(groupId: string, userId: string) {
 }
 
 export async function stopTrackingGroup(groupId: string, userId: string) {
+    console.log('Stopping tracking for group:', groupId, 'and user:', userId)
     if (!groupId || !userId) {
         console.error('Invalid groupId or userId')
         return
@@ -96,6 +97,10 @@ export async function stopTrackingGroup(groupId: string, userId: string) {
     }
 }
 export async function startTrackingGroup(groupId: string, userId: string) {
+    if (await checkIfTrackingGroup(groupId, userId)) {
+        console.log('Already tracking this group')
+        return
+    }
     if (!groupId || !userId) {
         console.error('Invalid groupId or userId')
         return

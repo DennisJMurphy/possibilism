@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { router } from 'expo-router'
+import { router, useFocusEffect } from 'expo-router'
 import { fetchUserGroups, getUser, getMetricsLabels, fetchAllEntries } from '../../lib/queries'
 
 export default function DashboardScreen() {
@@ -9,8 +9,7 @@ export default function DashboardScreen() {
   const [metrics, setMetrics] = useState<any[]>([])
   const [entryTotals, setEntryTotals] = useState<{ [metricId: string]: { total: number, userTotal: number } }>({})
 
-  useEffect(() => {
-    const fetchGroupsAndMetrics = async () => {
+  const fetchGroupsAndMetrics = async () => {
       const user  = await getUser()
       const userGroupData = await fetchUserGroups(user)
       const fetchMetricsLabels = await getMetricsLabels(userGroupData.map(g => g.group_id))
@@ -42,8 +41,12 @@ export default function DashboardScreen() {
       }
         setLoading(false)
     }
+
+  useFocusEffect(
+    useCallback(() => {
+    console.log('Fetching groups and metrics...'),
     fetchGroupsAndMetrics()
-  }, [])
+  }, []))
  
   if (loading) {
     return <Text>Loading...</Text>
