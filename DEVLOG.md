@@ -1,3 +1,7 @@
+## [2025-07-07]
+- had to give users RLS permission to delete rows from supabase
+- had to make a reset-password option - WIP, not ready to push
+
 ## [2025-07-04]
 - debugging in progress, dashboard is not refreshing as expected
 - "track" and "stop tracking" appear to be working correctly
