@@ -1,3 +1,7 @@
+1.0.4 (2025-07-08)
+ - added password resetting
+ - fixed tracking/not-tracking groups
+
 1.0.3 (2025-07-01)
  - updated dashboard to be actionable and complete
  

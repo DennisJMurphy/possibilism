@@ -1,3 +1,6 @@
+## [2025-07-08]
+- fixed the password resetting, required some supabase changes
+
 ## [2025-07-07]
 - had to give users RLS permission to delete rows from supabase
 - had to make a reset-password option - WIP, not ready to push
