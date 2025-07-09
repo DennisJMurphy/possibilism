@@ -54,6 +54,11 @@ export default function DashboardScreen() {
   return (
     <View style={{ flex: 1, padding: 50, justifyContent: 'center' }}>
       <Text style={{ fontSize: 20, marginBottom: 10 }}>Your Groups</Text>
+          {groups.length === 0 && (
+      <Text style={{ color: 'green', marginBottom: 20, marginTop: 10 }}>
+        You are not tracking any groups yet. Tap "Browse Groups" below to find and track one!
+      </Text>
+    )}
 
       <FlatList
         data={groups}

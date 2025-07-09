@@ -62,7 +62,7 @@ export async function checkIfTrackingGroup(groupId: string, userId: string) {
         .eq('group_id', groupId)
         .single()
 
-    if (error) {
+    if (error && error.code !== 'PGRST116') { // PGRST116 is "Results contain 0 rows") {
         console.error('Error checking tracking status:', error)
         return false
     }

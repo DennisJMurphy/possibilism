@@ -43,21 +43,23 @@ export default function BrowseGroupsScreen() {
             </View>
           </TouchableOpacity>
         )}
-      />
-
-ListFooterComponent={
-<TouchableOpacity
-  onPress={() => router.push('/create-group')}
-  style={{
-    marginTop: 20,
-    padding: 12,
-    backgroundColor: 'black',
-    borderRadius: 8,
-  }}
+        ListFooterComponent={
+          <TouchableOpacity
+            onPress={() => router.push('/create-group')}
+            style={{
+              marginTop: 20,
+              padding: 12,
+              backgroundColor: 'black',
+              borderRadius: 8,
+            }}
 >
   <Text style={{ color: 'white', textAlign: 'center' }}>+ Create New Group</Text>
 </TouchableOpacity>
 }
+        
+      />
+
+
     </View>
   )
 }

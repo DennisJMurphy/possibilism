@@ -39,8 +39,13 @@ export default function CreateGroupScreen() {
 
     if (metricError) return Alert.alert('Metric error', metricError.message)
 
-    // 4. Go to group detail page
-    // router.replace(`/groups/${group.id}`)
+    // 4. Confirm success and clear inputs
+    Alert.alert('Success', 'Group created successfully')
+    setGroupName('')
+    setMetricName('')
+    setUnit('')
+
+    // 5. Navigate to the dashboard
     router.replace('/(tabs)')
   }
 

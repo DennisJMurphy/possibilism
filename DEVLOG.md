@@ -1,5 +1,7 @@
 ## [2025-07-09]
 - cleaned up changes to reset-password flow
+- added alerts, cleared forms after submitting
+- adjusted formatting a bit
 
 ## [2025-07-08]
 - fixed the password resetting, required some supabase changes

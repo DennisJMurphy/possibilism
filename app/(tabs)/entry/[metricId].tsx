@@ -46,6 +46,9 @@ export default function EntryFormScreen() {
       console.error(error)
       Alert.alert('Error', 'Could not save entry.')
     } else {
+      setAmount('')
+      setNote('')
+      Alert.alert('Success', 'Entry saved successfully!')
       router.replace(`/groups/${metric.group_id}`)
     }
   }

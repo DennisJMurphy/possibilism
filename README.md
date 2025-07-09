@@ -14,7 +14,7 @@ The name was inspired in part by the late Hans Rosling and gapminder.
 Empowerment through data. 
 
 ## Status
-Initial screens roughed in
+[see the DEVLOG](DEVLOG.md)
 
 
 _____________original RN Readme____________
