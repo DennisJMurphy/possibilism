@@ -1,3 +1,6 @@
+## [2025-07-09]
+- cleaned up changes to reset-password flow
+
 ## [2025-07-08]
 - fixed the password resetting, required some supabase changes
 
