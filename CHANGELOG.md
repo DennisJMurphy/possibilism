@@ -1,4 +1,4 @@
-1.0.4 (2025-07-08)
+1.0.4 (2025-07-09)
  - added password resetting
  - fixed tracking/not-tracking groups
  - fixed clearing of input fields and added success message
