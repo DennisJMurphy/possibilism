@@ -115,3 +115,26 @@ export async function startTrackingGroup(groupId: string, userId: string) {
         console.log('Successfully started tracking group')
     }
 }
+
+export const requestLogout = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error('Error signing out:', error)
+      return error
+    } 
+    return null
+  }
+
+export async function addUser(email: string, password: string) {
+    if (!email || !password) {
+        console.error('Email and password are required')
+        return
+    }
+
+    const { data, error } = await supabase.auth.signUp({ email, password })
+    if (error) {
+        console.error('Error signing up:', error.message)
+        return null
+    }
+    return !!data
+}

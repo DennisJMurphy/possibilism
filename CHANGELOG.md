@@ -1,3 +1,8 @@
+1.0.5 (2025-07-10)
+ - added logout
+ - added check for existing user on registration
+ - reverted password-reset due to breaking user registration
+
 1.0.4 (2025-07-09)
  - added password resetting
  - fixed tracking/not-tracking groups

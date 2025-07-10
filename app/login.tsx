@@ -3,6 +3,7 @@ import { View, TextInput, Button, Text } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { router } from 'expo-router'
 import Constants from 'expo-constants' // dev only, delete for production
+import { addUser } from '@/lib/queries'
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('')
@@ -31,9 +32,12 @@ export default function LoginScreen() {
   }
 
   const handleSignup = async () => {
-    const { error } = await supabase.auth.signUp({ email, password })
-    if (error) setMessage(error.message)
-    else setMessage('Check your email for a confirmation link!')
+    const addUserConfirmation = await addUser(email, password)
+    if (addUserConfirmation) {
+      setMessage('User already exists with this email.')
+      return
+    }
+    setMessage('Check your email for a confirmation link!')
   }
 
   const handleForgotPassword = async () => {

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { router, useFocusEffect } from 'expo-router'
-import { fetchUserGroups, getUser, getMetricsLabels, fetchAllEntries } from '../../lib/queries'
+import { fetchUserGroups, getUser, getMetricsLabels, fetchAllEntries, requestLogout } from '../../lib/queries'
 
 export default function DashboardScreen() {
   const [groups, setGroups] = useState<any[]>([])
@@ -41,6 +41,17 @@ export default function DashboardScreen() {
       }
         setLoading(false)
     }
+  const handleLogout = async () => {
+    const error = await requestLogout()
+    if (error) {
+      return
+    } else {
+      setGroups([])
+      setMetrics([])
+      setEntryTotals({})
+      router.replace('/login')
+    }
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -91,9 +102,21 @@ export default function DashboardScreen() {
           borderRadius: 8,
         }}
       >
-        <Text style={{ color: 'white', textAlign: 'center' }}>+ Browse Groups</Text>
+        <Text style={{ color: 'white', textAlign: 'center' }}>Browse Groups</Text>
       </TouchableOpacity>
       }></FlatList>
+            <TouchableOpacity
+        onPress={() => handleLogout()}
+        style={{
+          marginBottom: 30,
+          padding: 12,
+          backgroundColor: 'black',
+          borderRadius: 8,
+        }}
+      >
+        <Text style={{ color: 'white', textAlign: 'center'
+        }}>Logout</Text>
+      </TouchableOpacity>
     </View>
   )
 }
