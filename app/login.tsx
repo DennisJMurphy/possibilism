@@ -41,7 +41,7 @@ export default function LoginScreen() {
   }
 
   const handleForgotPassword = async () => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email)
+    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: 'http://localhost:8081/reset-password' })
     if (error) setMessage(error.message)
     else setMessage('Check your email for a password reset link!')
   }

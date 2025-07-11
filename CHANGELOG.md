@@ -1,3 +1,6 @@
+1.0.6 (2025-07-11)
+ - fix: reset-password
+
 1.0.5 (2025-07-10)
  - added logout
  - added check for existing user on registration

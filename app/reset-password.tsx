@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { View, Text, TextInput, Button } from 'react-native'
 import { supabase } from '../lib/supabase'
-import { router } from 'expo-router'
+import { router} from 'expo-router'
 
 export default function ResetPasswordScreen() {
   const [newPassword, setNewPassword] = useState('')
@@ -26,7 +26,7 @@ export default function ResetPasswordScreen() {
       <Text style={{ fontSize: 18, marginBottom: 20 }}>Reset Password</Text>
       <TextInput
         placeholder='Enter new password'
-        secureTextEntry
+        secureTextEntry={true}
         value={newPassword}
         onChangeText={setNewPassword}
         style={{ borderWidth: 1, marginBottom: 10, padding: 8 }}

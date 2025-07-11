@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback } from 'react'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 import { router, useFocusEffect } from 'expo-router'
 import { fetchUserGroups, getUser, getMetricsLabels, fetchAllEntries, requestLogout } from '../../lib/queries'
+import { groupStyles } from '../styles'
 
 export default function DashboardScreen() {
   const [groups, setGroups] = useState<any[]>([])
@@ -95,28 +96,26 @@ export default function DashboardScreen() {
       ListFooterComponent={
       <TouchableOpacity
         onPress={() => router.push('/groups')}
-        style={{
-          marginTop: 20,
-          padding: 12,
-          backgroundColor: 'black',
-          borderRadius: 8,
-        }}
+        style={groupStyles.footerButton}
       >
-        <Text style={{ color: 'white', textAlign: 'center' }}>Browse Groups</Text>
+        <Text style={groupStyles.footerButtonText}>Browse Groups</Text>
       </TouchableOpacity>
       }></FlatList>
             <TouchableOpacity
         onPress={() => handleLogout()}
-        style={{
-          marginBottom: 30,
-          padding: 12,
-          backgroundColor: 'black',
-          borderRadius: 8,
-        }}
+        style={styles.logoutButton}
       >
-        <Text style={{ color: 'white', textAlign: 'center'
-        }}>Logout</Text>
+        <Text style={groupStyles.footerButtonText}>Logout</Text>
       </TouchableOpacity>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  logoutButton: {
+          marginBottom: 30,
+          padding: 12,
+          backgroundColor: 'black',
+          borderRadius: 8,
+        },
+});

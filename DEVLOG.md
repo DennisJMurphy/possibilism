@@ -1,3 +1,9 @@
+## [2025-07-11]
+- set the reset-password redirect path in the app, rather than in supabase
+- this successfully decouples registration confirmation and reset password
+- cleaned up some duplicate code
+- started consolidating styles, in preparation for dark/light modes WIP
+
 ## [2025-07-10]
 - added logout and a user-check
 - Attempted to implement improved password reset by updating Supabase Auth redirect URLs and front-end flow.
@@ -5,7 +11,7 @@
 - Cause: Auth redirect URL misconfiguration—same route used for both registration and password reset, but app does not distinguish between confirmation and recovery tokens.
 - Reverted changes to restore registration, but this broke password reset.
 - Next steps: Review and refactor Supabase Auth URL configuration and front-end token handling to decouple registration confirmation and password reset flows.
-- upgraded Expo
+- upgraded Expo to 53.0.0 (was 52.0.46)
 
 ## [2025-07-09]
 - cleaned up changes to reset-password flow

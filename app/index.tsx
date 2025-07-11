@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { router } from 'expo-router'
 import { supabase } from '../lib/supabase'
 
-
 export default function Index() {
   useEffect(() => {
     const checkSession = async () => {
