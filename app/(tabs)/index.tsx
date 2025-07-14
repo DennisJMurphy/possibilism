@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 import { router, useFocusEffect } from 'expo-router'
 import { fetchUserGroups, getUser, getMetricsLabels, fetchAllEntries, requestLogout } from '../../lib/queries'
-import { groupStyles } from '../styles/styles'
+import { groupStyles } from '../../constants/Styles'
 
 export default function DashboardScreen() {
   const [groups, setGroups] = useState<any[]>([])

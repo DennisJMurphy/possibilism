@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase'
 import { router } from 'expo-router'
 import Constants from 'expo-constants' // dev only, delete for production
 import { addUser } from '@/lib/queries'
-import { loginStyles } from './styles/styles'
+import { loginStyles } from '../constants/Styles'
 import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function LoginScreen() {
