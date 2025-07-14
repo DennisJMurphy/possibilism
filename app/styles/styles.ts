@@ -39,3 +39,28 @@ export const groupStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
 })
+
+export const loginStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  input: {
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 8,
+    borderRadius: 6,
+  },
+  button: {
+    marginBottom: 10,
+  },
+  message: {
+    marginTop: 20,
+    fontSize: 14,
+  },
+})

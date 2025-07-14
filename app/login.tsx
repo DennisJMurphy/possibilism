@@ -4,11 +4,19 @@ import { supabase } from '../lib/supabase'
 import { router } from 'expo-router'
 import Constants from 'expo-constants' // dev only, delete for production
 import { addUser } from '@/lib/queries'
+import { loginStyles } from './styles/styles'
+import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
+
+  const styles = loginStyles
+  const backgroundColor = useThemeColor({}, 'background')
+  const textColor = useThemeColor({}, 'text')
+  const inputBg = useThemeColor({}, 'inputBackground')
+  const borderColor = useThemeColor({}, 'border')
 
  // dev only, delete for production
   useEffect(() => {
@@ -47,30 +55,37 @@ export default function LoginScreen() {
   }
 
   return (
-  <View style={{ flex: 1, justifyContent: 'center', padding: 16, backgroundColor: 'white' }}>
-        <Text style={{ color: 'black' }}>Email</Text>
+  <View style={[styles.container, { backgroundColor }]}>
+        <Text style={[styles.label,{ color: textColor}]}>Email</Text>
         <TextInput
           autoCapitalize='none'
           placeholder='email@example.com'
           value={email}
           onChangeText={setEmail}
-          style={{ borderWidth: 1, marginBottom: 10, padding: 8, color: 'black', backgroundColor: 'white' }}
-          placeholderTextColor="#888"
+          style={[styles.input, { backgroundColor: inputBg, borderColor, color: textColor }]}
+          placeholderTextColor={borderColor}
         />
-        <Text style={{ color: 'black' }}>Password</Text>
+        <Text style={[styles.label, {color: textColor}]}>Password</Text>
         <TextInput
           placeholder='password'
           secureTextEntry
           value={password}
           onChangeText={setPassword}
-          style={{ borderWidth: 1, marginBottom: 10, padding: 8, color: 'black', backgroundColor: 'white' }}
-          placeholderTextColor="#888"
+          style={[styles.input, { backgroundColor: inputBg, borderColor, color: textColor }]}
+          placeholderTextColor={textColor}
         />
+      <View style={styles.button}>
         <Button title='Sign In' onPress={handleLogin} />
+      </View>
+      <View style={styles.button}>
         <Button title='Sign Up' onPress={handleSignup} />
+      </View>
+      <View style={styles.button}>
         <Button title='Forgot Password' onPress={handleForgotPassword} />
-    
-    {message && <Text style={{ marginTop: 20, color: 'black' }}>{message}</Text>}
-  </View>
+      </View>
+      {message && (
+        <Text style={[styles.message, { color: textColor }]}>{message}</Text>
+      )}
+    </View>
 )
 }

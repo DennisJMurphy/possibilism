@@ -1,3 +1,7 @@
+## [2025-07-14]
+- login screen prepped for light/dark
+- styles moved to separate file for login
+
 ## [2025-07-11]
 - set the reset-password redirect path in the app, rather than in supabase
 - this successfully decouples registration confirmation and reset password
@@ -6,7 +10,7 @@
 
 ## [2025-07-10]
 - added logout and a user-check
-- Attempted to implement improved password reset by updating Supabase Auth redirect URLs and front-end flow.
+- Attempted to implement improved password reset by updating Supabase Auth redirect URLs
 - Discovered side effect: new user registration began redirecting to password reset instead of login/dashboard.
 - Cause: Auth redirect URL misconfiguration—same route used for both registration and password reset, but app does not distinguish between confirmation and recovery tokens.
 - Reverted changes to restore registration, but this broke password reset.
