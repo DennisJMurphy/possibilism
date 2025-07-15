@@ -1,3 +1,6 @@
+## [2025-07-15]
+- dashboard updated with light/dark and consolidated styles
+
 ## [2025-07-14]
 - login screen prepped for light/dark
 - styles moved to separate file for login
