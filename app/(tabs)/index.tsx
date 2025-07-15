@@ -1,14 +1,24 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 import { router, useFocusEffect } from 'expo-router'
 import { fetchUserGroups, getUser, getMetricsLabels, fetchAllEntries, requestLogout } from '../../lib/queries'
 import { groupStyles } from '../../constants/Styles'
+import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function DashboardScreen() {
   const [groups, setGroups] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [metrics, setMetrics] = useState<any[]>([])
   const [entryTotals, setEntryTotals] = useState<{ [metricId: string]: { total: number, userTotal: number } }>({})
+
+  const backgroundColor = useThemeColor({}, 'background')
+  const cardBg = useThemeColor({}, 'inputBackground')
+  const textColor = useThemeColor({}, 'text')
+  const borderColor = useThemeColor({}, 'border')
+  const buttonBg = useThemeColor({}, 'buttonBackground')
+  const buttonText = useThemeColor({}, 'buttonText')
+  const descriptionColor = useThemeColor({}, 'descriptionText')
+
 
   const fetchGroupsAndMetrics = async () => {
       const user  = await getUser()
@@ -64,10 +74,10 @@ export default function DashboardScreen() {
     return <Text>Loading...</Text>
   }
   return (
-    <View style={{ flex: 1, padding: 50, justifyContent: 'center' }}>
-      <Text style={{ fontSize: 20, marginBottom: 10 }}>Your Groups</Text>
+    <View style={[groupStyles.container, { backgroundColor }]}>
+      <Text style={[groupStyles.header, { color: textColor}]}>Your Groups</Text>
           {groups.length === 0 && (
-      <Text style={{ color: 'green', marginBottom: 20, marginTop: 10 }}>
+      <Text style={{ color: descriptionColor, marginBottom: 20, marginTop: 10 }}>
         You are not tracking any groups yet. Tap "Browse Groups" below to find and track one!
       </Text>
     )}
@@ -76,19 +86,19 @@ export default function DashboardScreen() {
         data={groups}
         keyExtractor={(item) => item.id}
          renderItem={({ item }) => (
-          <View style={{ padding: 12, borderWidth: 1, marginBottom: 8, borderRadius: 8 }}>
+          <View style={[groupStyles.groupCard, { backgroundColor: cardBg, borderColor }]}>
             <TouchableOpacity onPress={() => router.push(`/groups/${item.id}`)}>
               <View >
-                <Text style={{ fontSize: 16 }}>{item.name}</Text>
-                <Text style={{ color: 'gray' }}>Metric: {item.metric?.name ?? 'no metric'} - {entryTotals[item.metric?.id]?.total} total {item.metric?.unit ?? ''}</Text>
-                <Text style={{ color: 'gray' }}>👤 You: {entryTotals[item.metric?.id]?.userTotal} {item.metric?.unit ?? ''}</Text>
+                <Text style={[groupStyles.groupName, { color: textColor }]}>{item.name}</Text>
+                <Text style={{ color: descriptionColor}}>Metric: {item.metric?.name ?? 'no metric'} - {entryTotals[item.metric?.id]?.total} total {item.metric?.unit ?? ''}</Text>
+                <Text style={{ color: descriptionColor}}>👤 You: {entryTotals[item.metric?.id]?.userTotal} {item.metric?.unit ?? ''}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{ marginTop: 8, padding: 8, backgroundColor: '#eee', borderRadius: 6 }}
+              style={{ marginTop: 8, padding: 8, backgroundColor: buttonBg, borderRadius: 6 }}
               onPress={() => router.push(`entry/${item.metric?.id}`)}
               >
-              <Text style={{ color: '#333', textAlign: 'left' }}>+ Add Entry</Text>
+              <Text style={{ color: buttonText, textAlign: 'left' }}>+ Add Entry</Text>
             </TouchableOpacity>
           </View>
 
@@ -96,26 +106,18 @@ export default function DashboardScreen() {
       ListFooterComponent={
       <TouchableOpacity
         onPress={() => router.push('/groups')}
-        style={groupStyles.footerButton}
+        style={[groupStyles.footerButton, { backgroundColor: buttonBg }]}
       >
-        <Text style={groupStyles.footerButtonText}>Browse Groups</Text>
+        <Text style={[groupStyles.footerButtonText, { color: buttonText}]}>Browse Groups</Text>
       </TouchableOpacity>
-      }></FlatList>
-            <TouchableOpacity
+      }
+      />
+
+      <TouchableOpacity
         onPress={() => handleLogout()}
-        style={styles.logoutButton}
-      >
-        <Text style={groupStyles.footerButtonText}>Logout</Text>
+        style={[groupStyles.logoutButton, { backgroundColor: buttonBg }]}>
+        <Text style={[groupStyles.footerButtonText, { color: buttonText }]}>Logout</Text>
       </TouchableOpacity>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  logoutButton: {
-          marginBottom: 30,
-          padding: 12,
-          backgroundColor: 'black',
-          borderRadius: 8,
-        },
-});
