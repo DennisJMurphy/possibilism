@@ -5,6 +5,8 @@ import { supabase } from '../../../lib/supabase'
 import { router } from 'expo-router'
 import { checkIfTrackingGroup, getUser, startTrackingGroup, stopTrackingGroup } from '@/lib/queries'
 import { Button } from 'react-native-elements'
+import { groupStyles } from '../../../constants/Styles'
+import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function GroupDetailScreen() {
   const { id } = useLocalSearchParams() 
@@ -14,6 +16,14 @@ export default function GroupDetailScreen() {
   const [entries, setEntries] = useState<any[]>([])
   const [isTracking, setIsTracking] = useState(false)
   const [userId, setUserId] = useState<string | null>(null)
+
+  const backgroundColor = useThemeColor({}, 'background')
+  const cardBg = useThemeColor({}, 'inputBackground')
+  const textColor = useThemeColor({}, 'text')
+  const borderColor = useThemeColor({}, 'border')
+  const buttonBg = useThemeColor({}, 'buttonBackground')
+  const buttonText = useThemeColor({}, 'buttonText')
+  const descriptionColor = useThemeColor({}, 'descriptionText')
 
   useEffect(() => {
     const fetchGroup = async () => {
@@ -83,13 +93,13 @@ export default function GroupDetailScreen() {
   }
 
   return (
-    <View style={{ flex: 1, padding: 100 }}>
-      <Text style={{ fontSize: 20, marginBottom: 12 }}>{group?.name}</Text>
-      <Text style={{ fontSize: 14, marginBottom: 12 }}>{group?.description}</Text>
+    <View style={[groupStyles.container, { backgroundColor }]}>
+      <Text style={[groupStyles.groupName, {color: textColor}]}>{group?.name}</Text>
+      <Text style={[groupStyles.groupDescription, { color: descriptionColor }]}>{group?.description}</Text>
     {metrics.length === 0 ? (
         <Text>No metrics available for this group.</Text>
       ) : (
-        <Text style={{ fontSize: 16, marginBottom: 12 }}>Metrics:</Text>
+        <Text style={[groupStyles.header, {color: textColor}]}>Metrics:</Text>
       )}
       <FlatList
         data={metrics}
@@ -97,36 +107,31 @@ export default function GroupDetailScreen() {
         renderItem={({ item }) => (
           <TouchableOpacity
            onPress={() => router.push(`/entry/${item.id}`)}
-            style={{
-              padding: 12,
-              borderWidth: 1,
-              borderRadius: 8,
-              marginBottom: 10
-            }}
+            style={[groupStyles.groupCard, { backgroundColor: cardBg }]}
           >
-            <Text style={{ fontSize: 16 }}>{item.name}</Text>
-            <Text style={{ color: 'gray' }}>Unit: {item.unit}</Text>
+            <Text style={[groupStyles.groupDescription, {color: textColor}]}>{item.name}</Text>
+            <Text style={{ color: textColor }}>Unit: {item.unit}</Text>
 
-          {entries.length>0? (<Text style={{ fontSize: 16, marginTop: 20 }}>
+          {entries.length>0? (<Text style={[groupStyles.groupDescription, {color: descriptionColor}]}>
             Total {metrics[0].name}: {entryTotal}
-                </Text>): <Text style={{ fontSize: 16, marginBottom: 12 }}>tracking unavailable</Text>}
+                </Text>): <Text style={[groupStyles.groupDescription, {color: descriptionColor}]}>tracking unavailable</Text>}
           </TouchableOpacity>
         )}
       />
     <Button
   title={isTracking ? "Stop Tracking Group" : "Track Group"}
-  onPress={async () => {
-    if (!userId || !group?.id) return
-    if (isTracking) {
-      // Remove tracking
+    onPress={async () => {
+      if (!userId || !group?.id) return
+      if (isTracking) {
       await stopTrackingGroup(group.id, userId)
       setIsTracking(false)
-    } else {
-      // Add tracking
+      } else {
       await startTrackingGroup(group.id, userId)
       setIsTracking(true)
-    }
+      }
   }}
+  buttonStyle={[groupStyles.trackingButton, { backgroundColor: buttonBg }]}
+  titleStyle={{ color: buttonText }}
 />
   
     </View>

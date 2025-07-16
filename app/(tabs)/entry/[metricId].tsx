@@ -2,12 +2,22 @@ import { useLocalSearchParams, router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { View, Text, TextInput, Button, Alert } from 'react-native'
 import { supabase } from '../../../lib/supabase'
+import { groupStyles } from '../../../constants/Styles'
+import { loginStyles } from '../../../constants/Styles' 
+import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function EntryFormScreen() {
   const { metricId } = useLocalSearchParams()
   const [metric, setMetric] = useState<any>(null)
   const [amount, setAmount] = useState('')
   const [note, setNote] = useState('')
+
+  const backgroundColor = useThemeColor({}, 'background')
+  const textColor = useThemeColor({}, 'text')
+  const borderColor = useThemeColor({}, 'border')
+  const buttonBg = useThemeColor({}, 'buttonBackground')
+  const buttonText = useThemeColor({}, 'buttonText')
+  const descriptionColor = useThemeColor({}, 'descriptionText')
 
   useEffect(() => {
     const fetchMetric = async () => {
@@ -58,8 +68,8 @@ export default function EntryFormScreen() {
   }
 
   return (
-    <View style={{ padding: 50 }}>
-      <Text style={{ fontSize: 18, marginBottom: 12 }}>
+    <View style={[groupStyles.container, { backgroundColor }]}>
+      <Text style={[groupStyles.header, { color: textColor }]}>
         Log your {metric.name} ({metric.unit})
       </Text>
 
@@ -68,14 +78,16 @@ export default function EntryFormScreen() {
         keyboardType="numeric"
         value={amount}
         onChangeText={setAmount}
-        style={{ borderWidth: 1, padding: 8, marginBottom: 12 }}
+        style={[loginStyles.input, { borderColor, color: textColor }]}
+        placeholderTextColor={descriptionColor}
       />
 
       <TextInput
         placeholder="Optional note (e.g. Beach cleanup)"
         value={note}
         onChangeText={setNote}
-        style={{ borderWidth: 1, padding: 8, marginBottom: 12 }}
+        style={[loginStyles.input, { borderColor, color: textColor }]}
+        placeholderTextColor={descriptionColor}
       />
 
       <Button title="Save Entry" onPress={handleSubmit} />

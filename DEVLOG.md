@@ -1,3 +1,7 @@
+## [2025-07-16]
+- all screens updated for light and dark
+- added description field to group form
+
 ## [2025-07-15]
 - dashboard updated with light/dark and consolidated styles
 

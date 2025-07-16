@@ -1,3 +1,7 @@
+1.0.7 (2025-07-11)
+ - light and dark modes supported
+ - group descriptions included
+
 1.0.6 (2025-07-11)
  - fix: reset-password
 

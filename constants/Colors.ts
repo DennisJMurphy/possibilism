@@ -29,6 +29,6 @@ export const Colors = {
     border: '#444',
     buttonBackground: '#fff',
     buttonText: '#000',
-    descriptionText: '#aaa',
+    descriptionText: '#ccc',
   },
 };

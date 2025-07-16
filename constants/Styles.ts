@@ -38,6 +38,11 @@ export const groupStyles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
   },
+  trackingButton: {
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 80,
+  },
 })
 
 export const loginStyles = StyleSheet.create({
