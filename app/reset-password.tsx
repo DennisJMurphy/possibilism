@@ -2,10 +2,18 @@ import { useState } from 'react'
 import { View, Text, TextInput, Button } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { router} from 'expo-router'
+import { loginStyles } from '../constants/Styles'
+import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function ResetPasswordScreen() {
   const [newPassword, setNewPassword] = useState('')
   const [message, setMessage] = useState('')
+
+  const styles = loginStyles
+  const backgroundColor = useThemeColor({}, 'background')
+  const textColor = useThemeColor({}, 'text')
+  const inputBg = useThemeColor({}, 'inputBackground')
+  const borderColor = useThemeColor({}, 'border')
 
   const handleResetPassword = async () => {
     if (!newPassword) {
@@ -22,17 +30,18 @@ export default function ResetPasswordScreen() {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', padding: 16 }}>
-      <Text style={{ fontSize: 18, marginBottom: 20 }}>Reset Password</Text>
+    <View style={[styles.container, { backgroundColor }]}>
+      <Text style={[styles.label,{ color: textColor}]}>Reset Password</Text>
       <TextInput
         placeholder='Enter new password'
         secureTextEntry={true}
         value={newPassword}
         onChangeText={setNewPassword}
-        style={{ borderWidth: 1, marginBottom: 10, padding: 8 }}
+        style={[styles.input, { backgroundColor: inputBg, borderColor, color: textColor }]}
+        placeholderTextColor={borderColor}
       />
       <Button title='Update Password' onPress={handleResetPassword} />
-      {message ? <Text style={{ marginTop: 20 }}>{message}</Text> : null}
+      {message ? <Text style={[styles.message, { color: textColor }]}>{message}</Text> : null}
     </View>
   )
 }
