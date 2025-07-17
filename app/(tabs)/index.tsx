@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 import { router, useFocusEffect } from 'expo-router'
 import { fetchUserGroups, getUser, getMetricsLabels, fetchAllEntries, requestLogout } from '../../lib/queries'
@@ -19,9 +19,12 @@ export default function DashboardScreen() {
   const buttonText = useThemeColor({}, 'buttonText')
   const descriptionColor = useThemeColor({}, 'descriptionText')
 
-
   const fetchGroupsAndMetrics = async () => {
       const user  = await getUser()
+      if (!user) {
+        router.replace('/login')
+        return
+      }
       const userGroupData = await fetchUserGroups(user)
       const fetchMetricsLabels = await getMetricsLabels(userGroupData.map(g => g.group_id))
       setMetrics(fetchMetricsLabels)
@@ -87,7 +90,7 @@ export default function DashboardScreen() {
         keyExtractor={(item) => item.id}
          renderItem={({ item }) => (
           <View style={[groupStyles.groupCard, { backgroundColor: cardBg, borderColor }]}>
-            <TouchableOpacity onPress={() => router.push(`/groups/${item.id}`)}>
+            <TouchableOpacity onPress={() => router.push(`../group_id/${item.id}`)}>
               <View >
                 <Text style={[groupStyles.groupName, { color: textColor }]}>{item.name}</Text>
                 <Text style={{ color: descriptionColor}}>Metric: {item.metric?.name ?? 'no metric'} - {entryTotals[item.metric?.id]?.total} total {item.metric?.unit ?? ''}</Text>
@@ -96,7 +99,7 @@ export default function DashboardScreen() {
             </TouchableOpacity>
             <TouchableOpacity
               style={{ marginTop: 8, padding: 8, backgroundColor: buttonBg, borderRadius: 6 }}
-              onPress={() => router.push(`entry/${item.metric?.id}`)}
+              onPress={() => router.push(`../metric_id/${item.metric?.id}`)}
               >
               <Text style={{ color: buttonText, textAlign: 'left' }}>+ Add Entry</Text>
             </TouchableOpacity>

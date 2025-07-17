@@ -1,11 +1,11 @@
 import { useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { supabase } from '../../../lib/supabase'
+import { supabase } from '../../lib/supabase'
 import { router } from 'expo-router'
 import { checkIfTrackingGroup, getUser, startTrackingGroup, stopTrackingGroup } from '@/lib/queries'
 import { Button } from 'react-native-elements'
-import { groupStyles } from '../../../constants/Styles'
+import { groupStyles } from '../../constants/Styles'
 import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function GroupDetailScreen() {
@@ -106,7 +106,7 @@ export default function GroupDetailScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-           onPress={() => router.push(`/entry/${item.id}`)}
+           onPress={() => router.push(`../metric_id/${item.id}`)}
             style={[groupStyles.groupCard, { backgroundColor: cardBg }]}
           >
             <Text style={[groupStyles.groupDescription, {color: textColor}]}>{item.name}</Text>

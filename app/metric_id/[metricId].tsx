@@ -1,9 +1,9 @@
 import { useLocalSearchParams, router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { View, Text, TextInput, Button, Alert } from 'react-native'
-import { supabase } from '../../../lib/supabase'
-import { groupStyles } from '../../../constants/Styles'
-import { loginStyles } from '../../../constants/Styles' 
+import { supabase } from '../../lib/supabase'
+import { groupStyles } from '../../constants/Styles'
+import { loginStyles } from '../../constants/Styles' 
 import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function EntryFormScreen() {

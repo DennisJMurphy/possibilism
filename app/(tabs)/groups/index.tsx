@@ -39,7 +39,7 @@ export default function BrowseGroupsScreen() {
         data={groups}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => router.push(`/groups/${item.id}`)}>
+          <TouchableOpacity onPress={() => router.push(`../../group_id/${item.id}`)}>
             <View style={[groupStyles.groupCard, { backgroundColor: cardBg, borderColor }]}>
               <Text style={[groupStyles.groupName, { color: textColor }]}>{item.name}</Text>
               {item.description && (
