@@ -1,6 +1,13 @@
 {
   "name": "possibilism-app",
   "main": "expo-router/entry",
+  "android": {
+    "package": "com.possibilism.app"
+  },
+  "ios": {
+    "bundleIdentifier": "com.possibilism.app",
+    "supportsTablet": true
+  },
   "version": "1.0.7",
   "scripts": {
     "start": "expo start",

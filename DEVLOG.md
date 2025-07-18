@@ -1,3 +1,7 @@
+## [2025-07-18]
+- checked for user-facing error messages
+- started considering identity issues
+
 ## [2025-07-17]
 - prepping for EAS Build
 - removed unused screens
