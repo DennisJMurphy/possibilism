@@ -1,3 +1,7 @@
+## [2025-07-21]
+- moved identity info to app.json
+- considered a privacy policy
+
 ## [2025-07-18]
 - checked for user-facing error messages
 - started considering identity issues
