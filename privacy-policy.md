@@ -8,7 +8,7 @@ _Last updated: July 2025_
 
 - **Account Information:** If you sign up, your email address and authentication details are stored securely by our authentication provider (Supabase).
 - **User-Generated Content:** Entries, groups, and metrics you create are stored in the App’s database.
-- **Usage Data:** We may collect anonymous usage data to improve app performance and user experience.
+- **Usage Data:** We may collect anonymous usage data to improve app performance and user experience. (someday)
 
 ## How We Use Your Information
 
