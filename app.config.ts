@@ -3,9 +3,9 @@ export default {
   slug: 'possibilism-app',
   version: '1.0.0',
   orientation: 'portrait',
-  icon: './assets/images/icon.png',
+  icon: './assets/images/icon.jpg',
   splash: {
-    image: './assets/images/icon.png',
+    image: './assets/images/icon.jpg',
     resizeMode: 'contain',
     backgroundColor: '#0099cc', // Use your app's background color
   },
@@ -15,7 +15,7 @@ export default {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './assets/images/icon.png',
+      foregroundImage: './assets/images/icon.jpg',
       backgroundColor: '#FFFFFF',
     },
   },
