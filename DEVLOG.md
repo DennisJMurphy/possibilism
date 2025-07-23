@@ -1,3 +1,7 @@
+## [2025-07-23]
+- added an icon and a splash screen
+- made progress towards first test build
+
 ## [2025-07-21]
 - moved identity info to app.json
 - considered a privacy policy
