@@ -1,3 +1,7 @@
+## [2025-07-24]
+- blocked by payment issues with apple
+- deployed to android
+
 ## [2025-07-23]
 - added an icon and a splash screen
 - made progress towards first test build

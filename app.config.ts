@@ -18,6 +18,8 @@ export default {
       foregroundImage: './assets/images/icon.jpg',
       backgroundColor: '#FFFFFF',
     },
+    package: 'com.possibilism.app',
+    permissions: ['INTERNET'], // Ensure INTERNET permission is included
   },
     extra: {
       SUPABASE_URL: process.env.SUPABASE_URL,
