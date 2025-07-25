@@ -59,7 +59,7 @@ export default function EntryFormScreen() {
       setAmount('')
       setNote('')
       Alert.alert('Success', 'Entry saved successfully!')
-      router.replace(`/groups/${metric.group_id}`)
+      router.replace(`/(tabs)`)
     }
   }
 

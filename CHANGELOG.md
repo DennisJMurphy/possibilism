@@ -1,3 +1,6 @@
+1.0.8 (2025-07-25)
+ - Fix: redirect from entering metric - to dashboard
+
 1.0.7 (2025-07-11)
  - light and dark modes supported
  - group descriptions included
