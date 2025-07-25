@@ -72,7 +72,7 @@ export default function LoginScreen() {
           value={password}
           onChangeText={setPassword}
           style={[styles.input, { backgroundColor: inputBg, borderColor, color: textColor }]}
-          placeholderTextColor={textColor}
+          placeholderTextColor={borderColor}
         />
       <View style={styles.button}>
         <Button title='Sign In' onPress={handleLogin} />

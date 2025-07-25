@@ -1,6 +1,9 @@
+## [2025-07-25]
+- started debug wip
+
 ## [2025-07-24]
-- blocked by payment issues with apple
-- deployed to android
+- blocked by payment issues with apple - no ios deployment possible
+- deployed to android successfully, started testing
 
 ## [2025-07-23]
 - added an icon and a splash screen
