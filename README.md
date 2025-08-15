@@ -11,6 +11,7 @@ This is a reboot of the Serious Possibilists SPA that I built as part of my boot
 
 ## Why I'm building this
 The name was inspired in part by the late Hans Rosling and gapminder. 
+https://www.gapminder.org/ <- check their quizzes, they think you're mostly wrong about the world
 Empowerment through data. 
 
 ## Status
