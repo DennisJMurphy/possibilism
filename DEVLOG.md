@@ -1,3 +1,7 @@
+## [2025-08-19]
+- removed dev logins
+- set up deep linking for android
+
 ## [2025-07-25]
 - started debug wip
 
