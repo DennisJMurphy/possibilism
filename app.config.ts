@@ -4,6 +4,7 @@ export default {
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/icon.jpg',
+  scheme: 'possibilism',
   splash: {
     image: './assets/images/icon.jpg',
     resizeMode: 'contain',
