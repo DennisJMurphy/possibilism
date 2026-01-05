@@ -3,10 +3,10 @@ export default {
   slug: 'possibilism-app',
   version: '1.0.0',
   orientation: 'portrait',
-  icon: './assets/images/icon.jpg',
+  icon: './assets/images/icon.png',
   scheme: 'possibilism',
   splash: {
-    image: './assets/images/icon.jpg',
+    image: './assets/images/icon.png',
     resizeMode: 'contain',
     backgroundColor: '#0099cc', // Use your app's background color
   },
@@ -16,7 +16,7 @@ export default {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './assets/images/icon.jpg',
+      foregroundImage: './assets/images/icon.png',
       backgroundColor: '#FFFFFF',
     },
     package: 'com.possibilism.app',
@@ -28,5 +28,8 @@ export default {
       "eas": {
         "projectId": "49e0502c-f497-4509-a7f8-0b2f153e73c0"
       }
-    }
+    },
+  "plugins": [
+    "expo-router"
+  ]
 }

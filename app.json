@@ -4,9 +4,9 @@
     "slug": "possibilism-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.jpg",
+    "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/images/icon.jpg",
+      "image": "./assets/images/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#0099cc"
     },
@@ -21,16 +21,21 @@
       "package": "com.possibilism.app",
       "permissions": ["INTERNET"],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.jpg",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "intentFilters": [
         {
           "action": "VIEW",
-          "data": {
-            "scheme": "possibilism",
-            "host": "reset-password"
-          },
+          "data": [
+            {
+              "scheme": "possibilism",
+              "host": "reset-password"
+            },
+            {
+              "scheme": "possibilism"
+            }
+          ],
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ]
@@ -38,14 +43,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.jpg"
+      "favicon": "./assets/images/icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/icon.jpg",
+          "image": "./assets/images/icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"

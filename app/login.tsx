@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { View, TextInput, Button, Text } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { router } from 'expo-router'
-import Constants from 'expo-constants' // dev only, delete for production
 import { addUser } from '@/lib/queries'
 import { loginStyles } from '../constants/Styles'
 import { useThemeColor } from '@/hooks/useThemeColor'
@@ -17,18 +16,6 @@ export default function LoginScreen() {
   const textColor = useThemeColor({}, 'text')
   const inputBg = useThemeColor({}, 'inputBackground')
   const borderColor = useThemeColor({}, 'border')
-
- // dev only, delete for production
-  useEffect(() => {
-  const loginUser = Constants.expoConfig?.extra?.DEVMAIL
-  const loginPass = Constants.expoConfig?.extra?.DEVPASS
-  if (loginUser && loginPass){
-    setEmail(loginUser)
-    setPassword(loginPass)
-    setMessage('Using dev credentials, please change before production!')
-  }
-  }, [])
-  // end dev only, delete for production
 
   const handleLogin = async () => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
