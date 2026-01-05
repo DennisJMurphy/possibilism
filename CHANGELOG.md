@@ -1,3 +1,10 @@
+1.0.9 (2026-05-01)
+- Add DeepLinkContext in _layout.tsx to share URLs across app
+- Handle recovery tokens in index.tsx for session setup
+- Improve reset-password.tsx with session verification
+- Fix scheme configuration in app.json and app.config.ts
+- Replace icon.jpg with icon.png for Expo compatibility
+
 1.0.8 (2025-07-25)
  - Fix: redirect from entering metric - to dashboard
 
