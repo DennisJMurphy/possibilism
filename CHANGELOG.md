@@ -1,4 +1,7 @@
-1.0.9 (2026-05-01)
+1.1.10 (2026-01-06)
+- added async storage to persist sessions after app restart
+
+1.0.9 (2026-01-05)
 - Add DeepLinkContext in _layout.tsx to share URLs across app
 - Handle recovery tokens in index.tsx for session setup
 - Improve reset-password.tsx with session verification

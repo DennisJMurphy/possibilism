@@ -1,5 +1,5 @@
 ## [2026-01-06]
-- implemented async storage
+- implemented async storage - sessions continue from app restarts
 - solved critical vulnerability issue
 - new deployment to android ()
 
