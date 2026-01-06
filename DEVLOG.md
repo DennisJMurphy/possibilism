@@ -1,3 +1,12 @@
+## [2026-01-06]
+- implemented async storage
+- solved critical vulnerability issue
+- new deployment to android ()
+
+## [2026-01-05]
+- came back to this project after a long pause
+- code review and refactor suggestions from copilot
+
 ## [2025-08-19]
 - removed dev logins
 - set up deep linking for android
