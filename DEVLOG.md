@@ -1,3 +1,6 @@
+## [2026-01-07]
+- added tslog for dev
+
 ## [2026-01-06]
 - implemented async storage - sessions continue from app restarts
 - solved critical vulnerability issue
