@@ -4,6 +4,7 @@ import { router, useFocusEffect } from 'expo-router'
 import { fetchUserGroups, getUser, getMetricsLabels, fetchAllEntries, requestLogout } from '../../lib/queries'
 import { groupStyles } from '../../constants/Styles'
 import { useThemeColor } from '@/hooks/useThemeColor'
+import { logger } from '../../lib/logger'
 
 export default function DashboardScreen() {
   const [groups, setGroups] = useState<any[]>([])
@@ -69,7 +70,7 @@ export default function DashboardScreen() {
 
   useFocusEffect(
     useCallback(() => {
-    console.log('Fetching groups and metrics...'),
+    logger.debug('Fetching groups and metrics...')
     fetchGroupsAndMetrics()
   }, []))
  

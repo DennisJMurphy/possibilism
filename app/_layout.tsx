@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 import * as Linking from 'expo-linking';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { logger } from '../lib/logger';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -27,13 +28,13 @@ export default function RootLayout() {
 
   useEffect(() => {
     const handleDeepLink = (url: string) => {
-      console.log('Deep link received in _layout:', url);
+      logger.debug('Deep link received in _layout:', url);
       setDeepLinkUrl(url);
     };
 
     Linking.getInitialURL().then(url => {
       if (url) {
-        console.log('App opened with deep link:', url);
+        logger.info('App opened with deep link:', url);
         setDeepLinkUrl(url);
       }
     });

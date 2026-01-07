@@ -3,6 +3,7 @@ import { router, useSegments, usePathname } from 'expo-router'
 import { supabase } from '../lib/supabase'
 import * as Linking from 'expo-linking'
 import { useDeepLink } from './_layout'
+import { logger } from '../lib/logger'
 
 export default function Index() {
   const deepLinkUrl = useDeepLink()
@@ -11,19 +12,19 @@ export default function Index() {
   const handledRef = useRef(false)
 
   useEffect(() => {
-    console.log('Index route - segments:', segments, 'pathname:', pathname, 'handled:', handledRef.current)
+    logger.debug('Index route - segments:', segments, 'pathname:', pathname, 'handled:', handledRef.current)
 
     const handleDeepLink = async (url: string | null) => {
       if (!url || handledRef.current) return
         // Check if it's a reset-password deep link
       if (url.includes('reset-password')) {
-        console.log('Reset password deep link detected, redirecting...')
+        logger.info('Reset password deep link detected, redirecting...')
         handledRef.current = true
         router.replace('/reset-password')
         return
       }
       if (url.includes('#access_token=')) {
-        console.log('Deep link contains session tokens, parsing...')
+        logger.debug('Deep link contains session tokens, parsing...')
         const fragment = url.split('#')[1]
         const params = new URLSearchParams(fragment)
         const accessToken = params.get('access_token')
@@ -36,15 +37,15 @@ export default function Index() {
               refresh_token: refreshToken
             })
             if (!error) {
-              console.log('Session set successfully, redirecting to reset-password')
+              logger.info('Session set successfully, redirecting to reset-password')
               handledRef.current = true
               router.replace('/reset-password')
               return
             } else {
-              console.log('Error setting session:', error)
+              logger.error('Error setting session:', error)
             }
           } catch (err) {
-            console.log('Exception setting session:', err)
+            logger.error('Exception setting session:', err)
           }
         }
       }
@@ -52,22 +53,22 @@ export default function Index() {
 
     const checkSessionAndHandleDeepLink = async () => {
       if (segments.length > 0 || pathname !== '/') {
-        console.log('User is on a specific route, not redirecting')
+        logger.debug('User is on a specific route, not redirecting')
         return
       }
       const url = await Linking.getInitialURL()
-      console.log('Initial URL:', url, 'DeepLinkContext URL:', deepLinkUrl)
+      logger.debug('Initial URL:', url, 'DeepLinkContext URL:', deepLinkUrl)
       await handleDeepLink(deepLinkUrl || url)
       if (handledRef.current) return
 
-      console.log('Checking session for initial navigation')
+      logger.debug('Checking session for initial navigation')
       const { data: { session } } = await supabase.auth.getSession()
       if (session) {
-        console.log('User has session, redirecting to tabs')
+        logger.info('User has session, redirecting to tabs')
         router.replace('/(tabs)')
       } else {
         if (!handledRef.current){
-        console.log('No session, redirecting to login')
+        logger.info('No session, redirecting to login')
         router.replace('/login')
         }
 
@@ -76,7 +77,7 @@ export default function Index() {
 
     // Listen for deep link events
     const subscription = Linking.addEventListener('url', event => {
-      console.log('Deep link event received:', event.url)
+      logger.debug('Deep link event received:', event.url)
       handleDeepLink(event.url)
     })
 

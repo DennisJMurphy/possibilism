@@ -1,9 +1,10 @@
 import { supabase } from './supabase'
+import { logger } from './logger'
 
 export async function getUser() {
     const { data: { user }, error } = await supabase.auth.getUser()
     if (error) {
-        console.error('Error fetching user:', error)
+        logger.error('Error fetching user:', error)
         return null
     }
         return user    
@@ -16,7 +17,7 @@ export async function fetchUserGroups(user: { id: any } | null) {
     .eq('user_id', user?.id)
 
   if (error) {
-    console.error('Error fetching groups:', error)
+    logger.error('Error fetching groups:', error)
     return []
   }
   
@@ -30,7 +31,7 @@ export async function getMetricsLabels(groupIds: string[]) {
     .in('group_id', groupIds)
 
   if (error) {
-    console.error('Error fetching metrics:', error)
+    logger.error('Error fetching metrics:', error)
     return []
   }
 
@@ -44,7 +45,7 @@ export async function fetchAllEntries (metricIds: string[]) {
     .eq('metric_id', metricIds)
 
   if (error) {
-    console.error('Error fetching entries:', error)
+    logger.error('Error fetching entries:', error)
     return []
   }
 
@@ -52,7 +53,7 @@ export async function fetchAllEntries (metricIds: string[]) {
 }
 export async function checkIfTrackingGroup(groupId: string, userId: string) {
     if (!groupId || !userId) {
-        console.error('Invalid groupId or userId')
+        logger.error('Invalid groupId or userId')
         return false
     }
     const { data, error } = await supabase
@@ -63,15 +64,15 @@ export async function checkIfTrackingGroup(groupId: string, userId: string) {
         .single()
 
     if (error && error.code !== 'PGRST116') { // PGRST116 is "Results contain 0 rows") {
-        console.error('Error checking tracking status:', error)
+        logger.error('Error checking tracking status:', error)
         return false
     }
     if (!data) {
-        console.log('User is not tracking this group')
+        logger.debug('User is not tracking this group')
         return false
     }
     if (data.id) {
-        console.log('User is tracking this group')
+        logger.debug('User is tracking this group')
         return true
     }
 
@@ -79,9 +80,9 @@ export async function checkIfTrackingGroup(groupId: string, userId: string) {
 }
 
 export async function stopTrackingGroup(groupId: string, userId: string) {
-    console.log('Stopping tracking for group:', groupId, 'and user:', userId)
+    logger.debug('Stopping tracking for group:', groupId, 'and user:', userId)
     if (!groupId || !userId) {
-        console.error('Invalid groupId or userId')
+        logger.error('Invalid groupId or userId')
         return
     }
     const { error } = await supabase
@@ -91,18 +92,18 @@ export async function stopTrackingGroup(groupId: string, userId: string) {
         .eq('group_id', groupId)
 
     if (error) {
-        console.error('Error stopping tracking:', error)
+        logger.error('Error stopping tracking:', error)
     } else {
-        console.log('Successfully stopped tracking group')
+        logger.info('Successfully stopped tracking group')
     }
 }
 export async function startTrackingGroup(groupId: string, userId: string) {
     if (await checkIfTrackingGroup(groupId, userId)) {
-        console.log('Already tracking this group')
+        logger.debug('Already tracking this group')
         return
     }
     if (!groupId || !userId) {
-        console.error('Invalid groupId or userId')
+        logger.error('Invalid groupId or userId')
         return
     }
     const { error } = await supabase
@@ -110,16 +111,16 @@ export async function startTrackingGroup(groupId: string, userId: string) {
         .insert({ user_id: userId, group_id: groupId })
 
     if (error) {
-        console.error('Error starting tracking:', error)
+        logger.error('Error starting tracking:', error)
     } else {
-        console.log('Successfully started tracking group')
+        logger.info('Successfully started tracking group')
     }
 }
 
 export const requestLogout = async () => {
     const { error } = await supabase.auth.signOut()
     if (error) {
-      console.error('Error signing out:', error)
+      logger.error('Error signing out:', error)
       return error
     } 
     return null
@@ -127,13 +128,13 @@ export const requestLogout = async () => {
 
 export async function addUser(email: string, password: string) {
     if (!email || !password) {
-        console.error('Email and password are required')
+        logger.error('Email and password are required')
         return
     }
 
     const { data, error } = await supabase.auth.signUp({ email, password })
     if (error) {
-        console.error('Error signing up:', error.message)
+        logger.error('Error signing up:', error.message)
         return null
     }
     return !!data
