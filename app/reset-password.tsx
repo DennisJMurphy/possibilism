@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { router, useLocalSearchParams } from 'expo-router'
 import { loginStyles } from '../constants/Styles'
 import { useThemeColor } from '@/hooks/useThemeColor'
+import { logger } from '../lib/logger'
 
 export default function ResetPasswordScreen() {
   const [newPassword, setNewPassword] = useState('')
@@ -18,59 +19,59 @@ export default function ResetPasswordScreen() {
   const borderColor = useThemeColor({}, 'border')
 
   useEffect(() => {
-    console.log('Reset password screen mounted with params:', params)
+    logger.debug('Reset password screen mounted with params:', params)
     
     // Handle deep link session recovery
     const handleDeepLink = async () => {
       // Check if user already has a valid session (set by index.tsx)
       const { data: { session } } = await supabase.auth.getSession()
       if (session) {
-        console.log('Valid session found, user can reset password')
+        logger.info('Valid session found, user can reset password')
         setMessage('You can now enter your new password.')
         return
       }
 
       // Handle direct token from email link
       if (params.token && params.type === 'recovery') {
-        console.log('Processing recovery token:', params.token)
+        logger.debug('Processing recovery token:', params.token)
         try {
           const { data, error } = await supabase.auth.verifyOtp({
             token_hash: params.token as string,
             type: 'recovery'
           })
           if (error) {
-            console.log('Token verification error:', error)
+            logger.error('Token verification error:', error)
             setMessage('Invalid or expired reset link. Please request a new one.')
           } else {
-            console.log('Token verified successfully:', data)
+            logger.info('Token verified successfully:', data)
             setMessage('Reset link verified! You can now enter your new password.')
           }
         } catch (error) {
-          console.log('Token verification exception:', error)
+          logger.error('Token verification exception:', error)
           setMessage('Error processing reset link.')
         }
       }
       // Handle session tokens (if Supabase redirects with them)
       else if (params.access_token && params.refresh_token) {
-        console.log('Processing session tokens')
+        logger.debug('Processing session tokens')
         try {
           const { error } = await supabase.auth.setSession({
             access_token: params.access_token as string,
             refresh_token: params.refresh_token as string
           })
           if (error) {
-            console.log('Session error:', error)
+            logger.error('Session error:', error)
             setMessage('Invalid reset link. Please request a new one.')
           } else {
-            console.log('Session set successfully')
+            logger.info('Session set successfully')
             setMessage('You can now enter your new password.')
           }
         } catch (error) {
-          console.log('Session exception:', error)
+          logger.error('Session exception:', error)
           setMessage('Error processing reset link.')
         }
       } else {
-        console.log('No tokens found in params and no valid session')
+        logger.warn('No tokens found in params and no valid session')
         setMessage('Please use a valid reset link to access this page.')
       }
     }
