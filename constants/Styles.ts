@@ -51,6 +51,19 @@ export const loginStyles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16,
   },
+  logo: {
+    width: 80,
+    height: 80,
+    alignSelf: 'center',
+    marginBottom: 16,
+    borderRadius: 12,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 24,
+  },
   label: {
     fontSize: 16,
     marginBottom: 4,
@@ -62,10 +75,20 @@ export const loginStyles = StyleSheet.create({
     borderRadius: 6,
   },
   button: {
-    marginBottom: 10,
+    marginBottom: 16,
+  },
+  linkContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 12,
+  },
+  link: {
+    fontWeight: '600',
+    textDecorationLine: 'underline',
   },
   message: {
     marginTop: 20,
     fontSize: 14,
+    textAlign: 'center',
   },
 })

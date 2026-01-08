@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { View, TextInput, Button, Text } from 'react-native'
+import { useState } from 'react'
+import { View, TextInput, Button, Text, Image, TouchableOpacity } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { router } from 'expo-router'
 import { addUser } from '@/lib/queries'
@@ -16,6 +16,7 @@ export default function LoginScreen() {
   const textColor = useThemeColor({}, 'text')
   const inputBg = useThemeColor({}, 'inputBackground')
   const borderColor = useThemeColor({}, 'border')
+  const linkColor = useThemeColor({}, 'tint')
 
   const handleLogin = async () => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -43,16 +44,23 @@ export default function LoginScreen() {
 
   return (
   <View style={[styles.container, { backgroundColor }]}>
-        <Text style={[styles.label,{ color: textColor}]}>Email</Text>
+        <Image 
+          source={require('../assets/images/icon.png')} 
+          style={styles.logo}
+        />
+        <Text style={[styles.title, { color: textColor }]}>Let's track good deeds!</Text>
+        
+        <Text style={[styles.label, { color: textColor }]}>Email</Text>
         <TextInput
           autoCapitalize='none'
+          keyboardType='email-address'
           placeholder='email@example.com'
           value={email}
           onChangeText={setEmail}
           style={[styles.input, { backgroundColor: inputBg, borderColor, color: textColor }]}
           placeholderTextColor={borderColor}
         />
-        <Text style={[styles.label, {color: textColor}]}>Password</Text>
+        <Text style={[styles.label, { color: textColor }]}>Password</Text>
         <TextInput
           placeholder='password'
           secureTextEntry
@@ -64,12 +72,23 @@ export default function LoginScreen() {
       <View style={styles.button}>
         <Button title='Sign In' onPress={handleLogin} />
       </View>
-      <View style={styles.button}>
-        <Button title='Sign Up' onPress={handleSignup} />
+      
+      <View style={styles.linkContainer}>
+        <Text style={{ color: textColor }}>New here? </Text>
+        <TouchableOpacity onPress={handleSignup}>
+          <Text style={[styles.link, { color: linkColor }]}>Create</Text>
+        </TouchableOpacity>
+        <Text style={{ color: textColor }}> an account</Text>
       </View>
-      <View style={styles.button}>
-        <Button title='Forgot Password' onPress={handleForgotPassword} />
+      
+      <View style={styles.linkContainer}>
+        <Text style={{ color: textColor }}>Forgot your </Text>
+        <TouchableOpacity onPress={handleForgotPassword}>
+          <Text style={[styles.link, { color: linkColor }]}>password</Text>
+        </TouchableOpacity>
+        <Text style={{ color: textColor }}>?</Text>
       </View>
+
       {message && (
         <Text style={[styles.message, { color: textColor }]}>{message}</Text>
       )}
