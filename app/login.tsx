@@ -44,6 +44,7 @@ export default function LoginScreen() {
 
   return (
   <View style={[styles.container, { backgroundColor }]}>
+    <Text style={[styles.title, { color: textColor }]}>Possibilists!</Text>
         <Image 
           source={require('../assets/images/icon.png')} 
           style={styles.logo}
