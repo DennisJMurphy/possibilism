@@ -8,8 +8,12 @@ export const groupStyles = StyleSheet.create({
   },
   header: {
     fontSize: 20,
-    marginBottom: 12,
+    marginBottom: 4,
     fontWeight: 'bold',
+  },
+  subheader: {
+    fontSize: 14,
+    marginBottom: 16,
   },
   groupCard: {
     borderWidth: 1,
@@ -24,19 +28,28 @@ export const groupStyles = StyleSheet.create({
   groupDescription: {
     marginTop: 4,
   },
+  userTotal: {
+    fontWeight: '600',
+  },
   footerButton: {
     marginTop: 20,
-    padding: 12,
+    marginBottom: 40,
+    padding: 10,
     borderRadius: 8,
+    borderWidth: 1,
   },
   footerButtonText: {
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontSize: 14,
   },
   logoutButton: {
     marginBottom: 30,
-    padding: 12,
-    borderRadius: 8,
+    padding: 8,
+    borderRadius: 6,
+  },
+  logoutButtonText: {
+    textAlign: 'center',
+    fontSize: 12,
   },
   trackingButton: {
     padding: 12,

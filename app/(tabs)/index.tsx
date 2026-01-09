@@ -19,6 +19,8 @@ export default function DashboardScreen() {
   const buttonBg = useThemeColor({}, 'buttonBackground')
   const buttonText = useThemeColor({}, 'buttonText')
   const descriptionColor = useThemeColor({}, 'descriptionText')
+  const mutedText = useThemeColor({}, 'mutedText')
+  const mutedBackground = useThemeColor({}, 'mutedBackground')
 
   const fetchGroupsAndMetrics = async () => {
       const user  = await getUser()
@@ -80,6 +82,7 @@ export default function DashboardScreen() {
   return (
     <View style={[groupStyles.container, { backgroundColor }]}>
       <Text style={[groupStyles.header, { color: textColor}]}>Your Groups</Text>
+      <Text style={[groupStyles.subheader, { color: descriptionColor }]}>Your tracked impacts</Text>
           {groups.length === 0 && (
       <Text style={{ color: descriptionColor, marginBottom: 20, marginTop: 10 }}>
         You are not tracking any groups yet. Tap "Browse Groups" below to find and track one!
@@ -95,7 +98,7 @@ export default function DashboardScreen() {
               <View >
                 <Text style={[groupStyles.groupName, { color: textColor }]}>{item.name}</Text>
                 <Text style={{ color: descriptionColor}}>Metric: {item.metric?.name ?? 'no metric'} - {entryTotals[item.metric?.id]?.total} total {item.metric?.unit ?? ''}</Text>
-                <Text style={{ color: descriptionColor}}>👤 You: {entryTotals[item.metric?.id]?.userTotal} {item.metric?.unit ?? ''}</Text>
+                <Text style={[groupStyles.userTotal, { color: textColor }]}>👤 You: {entryTotals[item.metric?.id]?.userTotal} {item.metric?.unit ?? ''}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -110,17 +113,17 @@ export default function DashboardScreen() {
       ListFooterComponent={
       <TouchableOpacity
         onPress={() => router.push('/groups')}
-        style={[groupStyles.footerButton, { backgroundColor: buttonBg }]}
+        style={[groupStyles.footerButton, { backgroundColor: mutedBackground, borderColor: mutedText }]}
       >
-        <Text style={[groupStyles.footerButtonText, { color: buttonText}]}>Browse Groups</Text>
+        <Text style={[groupStyles.footerButtonText, { color: mutedText }]}>Browse Groups</Text>
       </TouchableOpacity>
       }
       />
 
       <TouchableOpacity
         onPress={() => handleLogout()}
-        style={[groupStyles.logoutButton, { backgroundColor: buttonBg }]}>
-        <Text style={[groupStyles.footerButtonText, { color: buttonText }]}>Logout</Text>
+        style={[groupStyles.logoutButton, { backgroundColor: 'transparent' }]}>
+        <Text style={[groupStyles.logoutButtonText, { color: mutedText }]}>Logout</Text>
       </TouchableOpacity>
     </View>
   )

@@ -1,3 +1,9 @@
+## [2026-01-09]
+- Refactored dashboard, aethetics
+
+## [2026-01-08]
+- Refactored login screen, aethetics
+
 ## [2026-01-07]
 - added tslog for dev
 
