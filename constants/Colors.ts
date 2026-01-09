@@ -18,6 +18,8 @@ export const Colors = {
     buttonBackground: '#000',
     buttonText: '#fff',
     descriptionText: 'gray',
+    mutedText: '#888',
+    mutedBackground: '#e0e0e0',
   },
   dark: {
     text: '#ECEDEE',
@@ -30,5 +32,7 @@ export const Colors = {
     buttonBackground: '#fff',
     buttonText: '#000',
     descriptionText: '#ccc',
+    mutedText: '#777',
+    mutedBackground: '#2a2a2a',
   },
 };
