@@ -15,6 +15,9 @@ export default {
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'com.possibilism.app',
+    infoPlist: {
+      ITSAppUsesNonExemptEncryption: false
+    },
   },
   android: {
     adaptiveIcon: {

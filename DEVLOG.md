@@ -1,3 +1,6 @@
+## [2026-01-29]
+- attempted an ios preview deployment via Apple Developer
+
 ## [2026-01-09]
 - Refactored dashboard, aethetics
 
